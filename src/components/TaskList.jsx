@@ -1,43 +1,39 @@
-import { useSelector } from "react-redux";
+// TaskList.jsx
+import { useSelector, useDispatch } from "react-redux";
 import TaskItem from "./TaskItem";
-
-const taskArray = [
-  {
-    id: 1,
-    quantity: 5,
-    taskName: "learning react",
-    description: "to learn react js and deffirent stuff",
-    priority: "High",
-    completed: false,
-    Classification: "learning",
-  },
-  {
-    id: 2,
-    quantity: 11,
-    taskName: "going to helsinki",
-    description: "to meet Afrah Althweini",
-    priority: "Medium",
-    completed: false,
-    Classification: "personal",
-  },
-  {
-    id: 3,
-    quantity: 6,
-    taskName: "going to gym",
-    description: "to meet boss",
-    priority: "low",
-    completed: false,
-    Classification: "work",
-  },
-];
+import Button from "../ui/Button";
+import { deleteAllTasks } from "../redux/tasksSlice";
 
 function TaskList() {
   const tasks = useSelector((state) => state.operations.tasks);
+  const dispatch = useDispatch();
+
   return (
-    <div>
-      {tasks.map((task) => (
-        <TaskItem task={task} key={task.id} />
-      ))}
+    <div className="bg-white shadow-lg rounded-xl p-6 max-w-3xl mx-auto mt-6">
+      {tasks.length > 0 ? (
+        <>
+          <div className="space-y-4">
+            {tasks.map((task) => (
+              <TaskItem task={task} key={task.id} />
+            ))}
+          </div>
+
+          <Button
+            type="danger"
+            onClick={() => {
+              if (window.confirm("Delete all tasks?")) {
+                dispatch(deleteAllTasks());
+              }
+            }}
+          >
+            🗑 Delete All Tasks
+          </Button>
+        </>
+      ) : (
+        <p className="text-gray-600 text-center text-lg font-semibold mt-8 p-4 bg-yellow-100 border-2 border-yellow-400 rounded-md shadow-lg">
+          Start Adding Tasks
+        </p>
+      )}
     </div>
   );
 }

@@ -1,8 +1,10 @@
-import { setToggleCompleted } from "../redux/tasksSlice";
+import { useDispatch } from "react-redux";
+import { deleteTask, toggleTaskCompleted } from "../redux/tasksSlice";
 import Button from "../ui/Button";
 import { Trash2 } from "lucide-react";
 
 function TaskItem({ task }) {
+  const dispatch = useDispatch();
   return (
     <div className="relative flex flex-col gap-3 p-4 bg-white rounded-2xl shadow-md border border-blue-100 transition hover:shadow-lg max-w-xl mx-auto">
       {/* Task name */}
@@ -27,7 +29,7 @@ function TaskItem({ task }) {
           <input
             type="checkbox"
             checked={task.completed}
-            // onChange={() => setToggleCompleted()}
+            onChange={() => dispatch(toggleTaskCompleted(task.id))}
             className="h-5 w-5 accent-green-600"
           />
           <span className={task.completed ? "text-green-600" : "text-red-500"}>
@@ -42,7 +44,7 @@ function TaskItem({ task }) {
 
       {/* Delete button */}
       <div className="absolute top-3 right-3">
-        <Button type="delete">
+        <Button type="delete" onClick={() => dispatch(deleteTask(task.id))}>
           <Trash2 size={20} />
         </Button>
       </div>

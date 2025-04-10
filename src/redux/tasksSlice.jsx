@@ -56,6 +56,16 @@ const sliceOperations = createSlice({
       state.taskName = "";
       state.taskDescription = "";
     },
+    toggleTaskCompleted: (state, action) => {
+      const task = state.tasks.find((task) => task.id === action.payload);
+      if (task) task.completed = !task.completed;
+    },
+    deleteTask: (state, action) => {
+      state.tasks = state.tasks.filter((task) => task.id !== action.payload);
+    },
+    deleteAllTasks: (state) => {
+      state.tasks = [];
+    },
   },
 });
 
@@ -68,6 +78,9 @@ export const {
   setToggleCompleted,
   addNewTask,
   resetForm,
+  toggleTaskCompleted,
+  deleteTask,
+  deleteAllTasks,
 } = sliceOperations.actions;
 
 export default sliceOperations.reducer;
