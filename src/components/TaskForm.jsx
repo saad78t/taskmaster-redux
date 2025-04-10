@@ -14,19 +14,19 @@ import {
 } from "../redux/tasksSlice";
 
 function TaskForm() {
-  const taskName = useSelector((state) => state.operations.taskName);
+  const taskName = useSelector((state) => state.operations?.taskName);
   const taskDescription = useSelector(
-    (state) => state.operations.taskDescription
+    (state) => state.operations?.taskDescription
   );
   const numberSelection = useSelector(
-    (state) => state.operations.numberSelection
+    (state) => state.operations?.numberSelection
   );
   const prioritySelection = useSelector(
-    (state) => state.operations.prioritySelection
+    (state) => state.operations?.prioritySelection
   );
 
   const classification = useSelector(
-    (state) => state.operations.classification
+    (state) => state.operations?.classification
   );
 
   const dispatch = useDispatch();
@@ -36,15 +36,15 @@ function TaskForm() {
     if (!taskName || !taskDescription || !prioritySelection || !classification)
       return;
 
-    const newObject = {
-      taskName,
-      taskDescription,
-      numberSelection,
-      prioritySelection,
-      classification,
-    };
-
-    dispatch(addNewTask(newObject));
+    dispatch(
+      addNewTask({
+        taskName,
+        taskDescription,
+        numberSelection,
+        prioritySelection,
+        classification,
+      })
+    );
     dispatch(resetForm());
   }
 

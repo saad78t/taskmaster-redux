@@ -50,11 +50,11 @@ const sliceOperations = createSlice({
       });
     },
     resetForm: (state) => {
-      state.taskName = "";
-      state.taskDescription = "";
       state.numberSelection = 1;
       state.prioritySelection = "";
       state.classification = "";
+      state.taskName = "";
+      state.taskDescription = "";
     },
   },
 });
