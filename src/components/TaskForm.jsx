@@ -52,7 +52,6 @@ function TaskForm() {
     <div className="flex justify-center bg-gray-100 py-10">
       <form className="w-full max-w-full p-4" onSubmit={handleSubmit}>
         <h2 className="text-2xl font-bold text-center mb-4">Create New Task</h2>
-
         <SelectNumber
           value={numberSelection}
           onChange={(e) => dispatch(setNumberSelection(Number(e.target.value)))}
