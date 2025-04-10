@@ -32,25 +32,22 @@ const sliceOperations = createSlice({
     setTaskDescription: (state, action) => {
       state.taskDescription = action.payload;
     },
-    // setSearch: (state, action) => {
-    //   const searchTerm = action.payload.toLowerCase();
-    //   state.search = action.payload;
-
-    //   state.searchResult = state.tasks.filter((task) =>
-    //     task.taskName.toLowerCase().includes(searchTerm)
-    //   );
-    // },
-    // tasksSlice.js
-    // tasksSlice.js
-    // tasksSlice.js
     setSearch: (state, action) => {
-      state.search = action.payload.toLowerCase();
+      const searchTerm = action.payload.toLowerCase();
+      state.search = action.payload;
 
-      // تصفية المهام بناءً على البحث
       state.searchResult = state.tasks.filter((task) =>
-        task.taskName.toLowerCase().includes(state.search)
+        task.taskName.toLowerCase().includes(searchTerm)
       );
     },
+    // setSearch: (state, action) => {
+    //   state.search = action.payload.toLowerCase();
+
+    //   // تصفية المهام بناءً على البحث
+    //   state.searchResult = state.tasks.filter((task) =>
+    //     task.taskName.toLowerCase().includes(state.search)
+    //   );
+    // },
 
     addNewTask: (state, action) => {
       const {
@@ -77,12 +74,7 @@ const sliceOperations = createSlice({
       state.taskName = "";
       state.taskDescription = "";
     },
-    // toggleTaskCompleted: (state, action) => {
-    //   const task = state.tasks.find((task) => task.id === action.payload);
-    //   if (task) task.completed = !task.completed;
-    // },
-    // tasksSlice.js (الريدوكس)
-    // tasksSlice.js
+
     toggleTaskCompleted: (state, action) => {
       const taskId = action.payload;
 
@@ -90,15 +82,16 @@ const sliceOperations = createSlice({
       const task = state.tasks.find((task) => task.id === taskId);
 
       if (task) {
-        // تحديث حالة `completed` للمهمة
+        // تحديث حالة `completed` للمهمة في `tasks`
         task.completed = !task.completed;
+
+        // تحديث الـ `searchResult` إذا كانت المهمة في النتيجة
+        state.searchResult = state.tasks.filter((task) =>
+          task.taskName.toLowerCase().includes(state.search)
+        );
       }
     },
 
-    // deleteTask: (state, action) => {
-    //   state.tasks = state.tasks.filter((task) => task.id !== action.payload);
-    // },
-    // tasksSlice.js
     deleteTask: (state, action) => {
       // حذف المهمة من `tasks`
       state.tasks = state.tasks.filter((task) => task.id !== action.payload);

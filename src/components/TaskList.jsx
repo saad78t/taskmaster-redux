@@ -14,7 +14,7 @@ function TaskList() {
 
   return (
     <section className="max-w-3xl mx-auto mt-6 px-4">
-      {/* Hide search if there are no tasks*/}
+      {/* Hide search if there are no tasks */}
       {tasks.length > 0 && <Search />}
       <div className="bg-gray-50 shadow-md rounded-xl p-6">
         {tasks.length > 0 ? (
