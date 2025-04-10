@@ -1,13 +1,11 @@
 import TaskForm from "../components/TaskForm";
 import TaskList from "../components/TaskList";
-import Footer from "../ui/Footer";
 
 function Home() {
   return (
-    <div>
+    <div className="w-full max-w-2xl space-y-6 mx-auto">
       <TaskForm />
       <TaskList />
-      <Footer />
     </div>
   );
 }

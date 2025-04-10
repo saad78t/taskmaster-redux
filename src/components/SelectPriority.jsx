@@ -1,9 +1,18 @@
-function SelectPriority() {
+function SelectPriority({ value, onChange }) {
+  const priorities = ["High", "Medium", "Low"];
+
   return (
-    <select className="bg-gray-50 border border-gray-300 rounded">
-      <option>High</option>
-      <option>Medium</option>
-      <option>Low</option>
+    <select
+      value={value}
+      onChange={onChange}
+      className="bg-gray-50 border border-gray-300 rounded"
+    >
+      <option value="">Select Priority</option>
+      {priorities.map((priority, i) => (
+        <option key={i} value={priority}>
+          {priority}
+        </option>
+      ))}
     </select>
   );
 }

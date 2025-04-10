@@ -1,15 +1,15 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import TaskDetails from "./pages/TaskDetails";
-import Header from "./ui/Header";
-
+import AppLayout from "./layout/AppLayout";
 function App() {
   return (
     <BrowserRouter>
-      <Header />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/task/:id" element={<TaskDetails />} />
+        <Route element={<AppLayout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/task/:id" element={<TaskDetails />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );

@@ -1,9 +1,18 @@
-function Classification() {
+function Classification({ value, onChange }) {
+  const classifications = ["Personal", "Work", "Learning"];
+
   return (
-    <select className="bg-gray-50 border border-gray-300 rounded">
-      <option>Personal</option>
-      <option>Work</option>
-      <option>Learning</option>
+    <select
+      value={value}
+      onChange={onChange}
+      className="bg-gray-50 border border-gray-300 rounded"
+    >
+      <option value="">Select Classification</option>
+      {classifications.map((clas, i) => (
+        <option key={i} value={clas}>
+          {clas}
+        </option>
+      ))}
     </select>
   );
 }

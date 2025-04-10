@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import TaskItem from "./TaskItem";
 
 const taskArray = [
@@ -31,9 +32,10 @@ const taskArray = [
 ];
 
 function TaskList() {
+  const tasks = useSelector((state) => state.operations.tasks);
   return (
     <div>
-      {taskArray.map((task) => (
+      {tasks.map((task) => (
         <TaskItem task={task} key={task.id} />
       ))}
     </div>

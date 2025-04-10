@@ -1,7 +1,8 @@
+import { setToggleCompleted } from "../redux/tasksSlice";
 import Button from "../ui/Button";
 import { Trash2 } from "lucide-react";
 
-function TaskItem({ task, onToggleComplete }) {
+function TaskItem({ task }) {
   return (
     <div className="relative flex flex-col gap-3 p-4 bg-white rounded-2xl shadow-md border border-blue-100 transition hover:shadow-lg max-w-xl mx-auto">
       {/* Task name */}
@@ -11,20 +12,22 @@ function TaskItem({ task, onToggleComplete }) {
 
       {/* Task details */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-2 gap-x-8 text-sm text-gray-700">
-        <p>🧮 Quantity: {task.quantity}</p>
+        <p>🧮 Quantity: {task.numberSelection}</p>
         <p>
           📝 Description:{" "}
-          <span className="italic text-gray-600">{task.description}</span>
+          <span className="italic text-gray-600">{task.taskDescription}</span>
         </p>
         <p>
           ⏫ Priority:{" "}
-          <span className="text-yellow-600 font-medium">{task.priority}</span>
+          <span className="text-yellow-600 font-medium">
+            {task.prioritySelection}
+          </span>
         </p>
         <label className="flex items-center gap-2">
           <input
             type="checkbox"
             checked={task.completed}
-            onChange={() => onToggleComplete(task.id)}
+            // onChange={() => setToggleCompleted()}
             className="h-5 w-5 accent-green-600"
           />
           <span className={task.completed ? "text-green-600" : "text-red-500"}>
@@ -33,7 +36,7 @@ function TaskItem({ task, onToggleComplete }) {
         </label>
         <p>
           🏷️ Classification:{" "}
-          <span className="text-purple-600">{task.Classification}</span>
+          <span className="text-purple-600">{task.classification}</span>
         </p>
       </div>
 
