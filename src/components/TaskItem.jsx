@@ -1,10 +1,26 @@
 import { useDispatch } from "react-redux";
-import { deleteTask, toggleTaskCompleted } from "../redux/tasksSlice";
+import {
+  fetchTasksFromSupabase,
+  toggleTaskCompleted,
+} from "../redux/tasksSlice";
+import { deleteTask } from "../services/apiTasks";
 import Button from "../ui/Button";
 import { Trash2 } from "lucide-react";
 
 function TaskItem({ task }) {
   const dispatch = useDispatch();
+
+  async function handleDelete() {
+    try {
+      await deleteTask(task.id); // Delete from Supabase
+      dispatch(fetchTasksFromSupabase());
+      // const updatedTasks = await getTasks(); // Re-fetch tasks from Supabase
+      // dispatch(setTasksFromSupabase(updatedTasks)); // Update redux
+    } catch (err) {
+      console.error("Failed to delete task:", err.message);
+    }
+  }
+
   return (
     <div className="relative flex flex-col gap-3 p-4 bg-white rounded-2xl shadow-md border border-blue-100 transition hover:shadow-lg max-w-xl mx-auto">
       {/* Task name */}
@@ -44,7 +60,7 @@ function TaskItem({ task }) {
 
       {/* Delete button */}
       <div className="absolute top-3 right-3">
-        <Button type="delete" onClick={() => dispatch(deleteTask(task.id))}>
+        <Button type="delete" onClick={() => handleDelete()}>
           <Trash2 size={20} />
         </Button>
       </div>

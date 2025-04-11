@@ -1,4 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { getTasks } from "../services/apiTasks";
+
+// thunk to fetch tasks from Supabase and update Redux
+export const fetchTasksFromSupabase = () => async (dispatch) => {
+  try {
+    const tasks = await getTasks(); // Fetch tasks from Supabase
+    dispatch(setTasksFromSupabase(tasks)); // Update state
+  } catch (error) {
+    console.error("Error fetching tasks from Supabase:", error);
+  }
+};
 
 const initialState = {
   numberSelection: 1,
@@ -94,14 +105,14 @@ const sliceOperations = createSlice({
       }
     },
 
-    deleteTask: (state, action) => {
+    /*     deleteTask: (state, action) => {
       // Delete the task from tasks
       state.tasks = state.tasks.filter((task) => task.id !== action.payload);
       // Update the searchResult after deletion (there should be no effect on the filter)
       state.searchResult = state.tasks.filter((task) =>
         task.taskName.toLowerCase().includes(state.search)
       );
-    },
+    }, */
 
     deleteAllTasks: (state) => {
       state.tasks = [];
