@@ -9,7 +9,7 @@ lerna-debug.log*
 
 node_modules
 notifications.js
-problems
+problems.txt
 problems_screenshots
 dist
 dist-ssr
