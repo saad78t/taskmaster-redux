@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { v4 as uuidv4 } from "uuid";
 
 const initialState = {
   numberSelection: 1,
@@ -40,6 +39,10 @@ const sliceOperations = createSlice({
         task.taskName.toLowerCase().includes(searchTerm)
       );
     },
+    setTasksFromSupabase: (state, action) => {
+      state.tasks = action.payload;
+    },
+
     // setSearch: (state, action) => {
     //   state.search = action.payload.toLowerCase();
 
@@ -50,22 +53,23 @@ const sliceOperations = createSlice({
     // },
 
     addNewTask: (state, action) => {
-      const {
-        taskName,
-        taskDescription,
-        numberSelection,
-        prioritySelection,
-        classification,
-      } = action.payload;
-      state.tasks.push({
-        id: uuidv4(),
-        taskName,
-        taskDescription,
-        numberSelection,
-        prioritySelection,
-        classification,
-        completed: false,
-      });
+      // const {
+      //   taskName,
+      //   taskDescription,
+      //   numberSelection,
+      //   prioritySelection,
+      //   classification,
+      // } = action.payload;
+      // state.tasks.push({
+      //   id: uuidv4(),
+      //   taskName,
+      //   taskDescription,
+      //   numberSelection,
+      //   prioritySelection,
+      //   classification,
+      //   completed: false,
+      // });
+      state.tasks.push(action.payload); // Receive the complete task from Supabase
     },
     resetForm: (state) => {
       state.numberSelection = 1;
@@ -118,6 +122,7 @@ export const {
   deleteTask,
   deleteAllTasks,
   setSearch,
+  setTasksFromSupabase,
 } = sliceOperations.actions;
 
 export default sliceOperations.reducer;

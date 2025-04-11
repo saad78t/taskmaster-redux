@@ -1,9 +1,10 @@
-// TaskList.jsx
 import { useSelector, useDispatch } from "react-redux";
 import TaskItem from "./TaskItem";
 import Button from "../ui/Button";
-import { deleteAllTasks } from "../redux/tasksSlice";
+import { deleteAllTasks, setTasksFromSupabase } from "../redux/tasksSlice";
 import Search from "./Search";
+import { useEffect } from "react";
+import { getTasks } from "../services/apiTasks";
 
 function TaskList() {
   const { tasks, search, searchResult } = useSelector(
@@ -11,6 +12,15 @@ function TaskList() {
   );
   const displayTasks = search ? searchResult : tasks;
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    async function fetchTasksFromSupabase() {
+      const supaBaseTasks = await getTasks();
+      dispatch(setTasksFromSupabase(supaBaseTasks));
+    }
+
+    fetchTasksFromSupabase();
+  }, [dispatch]);
 
   return (
     <section className="max-w-3xl mx-auto mt-6 px-4">

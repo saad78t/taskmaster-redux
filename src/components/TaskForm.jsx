@@ -12,6 +12,7 @@ import {
   addNewTask,
   resetForm,
 } from "../redux/tasksSlice";
+import supabase from "../services/supabase";
 
 function TaskForm() {
   const taskName = useSelector((state) => state.operations?.taskName);
@@ -29,22 +30,33 @@ function TaskForm() {
     (state) => state.operations?.classification
   );
 
+  const completed = useSelector((state) => state.operations?.completed);
+
   const dispatch = useDispatch();
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
     if (!taskName || !taskDescription || !prioritySelection || !classification)
       return;
+    const { data, error } = await supabase
+      .from("tasks")
+      .insert([
+        {
+          taskName,
+          taskDescription,
+          numberSelection,
+          prioritySelection,
+          classification,
+          completed,
+        },
+      ])
+      .select();
+    if (error) {
+      console.error("Error adding task:", error.message);
+      return;
+    }
 
-    dispatch(
-      addNewTask({
-        taskName,
-        taskDescription,
-        numberSelection,
-        prioritySelection,
-        classification,
-      })
-    );
+    dispatch(addNewTask(data[0]));
     dispatch(resetForm());
   }
 
