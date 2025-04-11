@@ -43,7 +43,7 @@ const sliceOperations = createSlice({
     // setSearch: (state, action) => {
     //   state.search = action.payload.toLowerCase();
 
-    //   // تصفية المهام بناءً على البحث
+    //   //// Filter tasks based on search
     //   state.searchResult = state.tasks.filter((task) =>
     //     task.taskName.toLowerCase().includes(state.search)
     //   );
@@ -78,14 +78,12 @@ const sliceOperations = createSlice({
     toggleTaskCompleted: (state, action) => {
       const taskId = action.payload;
 
-      // العثور على المهمة في `tasks`
+      // Find the task in tasks
       const task = state.tasks.find((task) => task.id === taskId);
-
       if (task) {
-        // تحديث حالة `completed` للمهمة في `tasks`
+        // Update the complete status of the task in tasks
         task.completed = !task.completed;
-
-        // تحديث الـ `searchResult` إذا كانت المهمة في النتيجة
+        // Update the searchResul if the task is in the result
         state.searchResult = state.tasks.filter((task) =>
           task.taskName.toLowerCase().includes(state.search)
         );
@@ -93,10 +91,9 @@ const sliceOperations = createSlice({
     },
 
     deleteTask: (state, action) => {
-      // حذف المهمة من `tasks`
+      // Delete the task from tasks
       state.tasks = state.tasks.filter((task) => task.id !== action.payload);
-
-      // تحديث الـ `searchResult` بعد الحذف (لا يجب أن يكون هناك تأثير على الفلتر)
+      // Update the searchResult after deletion (there should be no effect on the filter)
       state.searchResult = state.tasks.filter((task) =>
         task.taskName.toLowerCase().includes(state.search)
       );
