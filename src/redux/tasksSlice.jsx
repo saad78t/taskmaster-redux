@@ -1,16 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getTasks } from "../services/apiTasks";
 
-// thunk to fetch tasks from Supabase and update Redux
-export const fetchTasksFromSupabase = () => async (dispatch) => {
-  try {
-    const tasks = await getTasks(); // Fetch tasks from Supabase
-    dispatch(setTasksFromSupabase(tasks)); // Update state
-  } catch (error) {
-    console.error("Error fetching tasks from Supabase:", error);
-  }
-};
-
 const initialState = {
   numberSelection: 1,
   prioritySelection: "",
@@ -20,7 +10,21 @@ const initialState = {
   completed: false,
   tasks: [],
   search: "",
+  isLoading: false,
   searchResult: [],
+};
+
+// thunk to fetch tasks from Supabase and update Redux
+export const fetchTasksFromSupabase = () => async (dispatch) => {
+  try {
+    dispatch(setLoading(true));
+    const tasks = await getTasks(); // Fetch tasks from Supabase
+    dispatch(setTasksFromSupabase(tasks)); // Update state
+  } catch (error) {
+    console.error("Error fetching tasks from Supabase:", error);
+  } finally {
+    dispatch(setLoading(false));
+  }
 };
 
 const sliceOperations = createSlice({
@@ -90,20 +94,20 @@ const sliceOperations = createSlice({
       state.taskDescription = "";
     },
 
-    toggleTaskCompleted: (state, action) => {
-      const taskId = action.payload;
+    // toggleTaskCompleted: (state, action) => {
+    //   const taskId = action.payload;
 
-      // Find the task in tasks
-      const task = state.tasks.find((task) => task.id === taskId);
-      if (task) {
-        // Update the complete status of the task in tasks
-        task.completed = !task.completed;
-        // Update the searchResul if the task is in the result
-        state.searchResult = state.tasks.filter((task) =>
-          task.taskName.toLowerCase().includes(state.search)
-        );
-      }
-    },
+    //   // Find the task in tasks
+    //   const task = state.tasks.find((task) => task.id === taskId);
+    //   if (task) {
+    //     // Update the complete status of the task in tasks
+    //     task.completed = !task.completed;
+    //     // Update the searchResul if the task is in the result
+    //     state.searchResult = state.tasks.filter((task) =>
+    //       task.taskName.toLowerCase().includes(state.search)
+    //     );
+    //   }
+    // },
 
     /*     deleteTask: (state, action) => {
       // Delete the task from tasks
@@ -116,6 +120,9 @@ const sliceOperations = createSlice({
 
     deleteAllTasks: (state) => {
       state.tasks = [];
+    },
+    setLoading: (state, action) => {
+      state.isLoading = action.payload;
     },
   },
 });
@@ -134,6 +141,7 @@ export const {
   deleteAllTasks,
   setSearch,
   setTasksFromSupabase,
+  setLoading,
 } = sliceOperations.actions;
 
 export default sliceOperations.reducer;

@@ -28,3 +28,12 @@ export async function deleteAllTask() {
     console.log("All tasks deleted successfully.");
   }
 }
+
+export async function updateTaskCompleted(id, completed) {
+  const { error } = await supabase
+    .from("tasks")
+    .update({ completed })
+    .eq("id", id);
+
+  if (error) throw new Error("Failed to update task status");
+}
