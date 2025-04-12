@@ -8,22 +8,21 @@ import { updateTaskCompleted } from "../services/apiTasks";
 function TaskItem({ task }) {
   const dispatch = useDispatch();
 
-  // التأكد من التعامل الصحيح مع Toggle Completed
   async function handleToggleCompleted(e) {
-    e.stopPropagation(); // منع أي حدث غير مرغوب فيه
+    e.preventDefault(); // ✅ يمنع أي سلوك افتراضي غير متوقع
+
     try {
-      await updateTaskCompleted(task.id, !task.completed); // Toggle completed
-      dispatch(fetchTasksFromSupabase()); // إعادة تحميل المهام
+      await updateTaskCompleted(task.id, !task.completed); // قم بتحديث حالة المهمة
+      dispatch(fetchTasksFromSupabase()); // جلب البيانات المحدثة
     } catch (error) {
       console.error("Error updating task:", error.message);
     }
   }
 
-  // التعامل مع حذف المهمة
   async function handleDelete() {
     try {
-      await deleteTask(task.id);
-      dispatch(fetchTasksFromSupabase());
+      await deleteTask(task.id); // حذف المهمة من Supabase
+      dispatch(fetchTasksFromSupabase()); // جلب البيانات المحدثة بعد الحذف
     } catch (err) {
       console.error("Failed to delete task:", err.message);
     }
@@ -31,12 +30,12 @@ function TaskItem({ task }) {
 
   return (
     <div className="relative flex flex-col gap-3 p-4 bg-white rounded-2xl shadow-md border border-blue-100 transition hover:shadow-lg max-w-xl mx-auto">
-      {/* اسم المهمة */}
+      {/* Task name */}
       <h3 className="text-lg font-bold text-blue-700 flex items-center gap-2">
         📌 {task.taskName}
       </h3>
 
-      {/* تفاصيل المهمة */}
+      {/* Task details */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-2 gap-x-8 text-sm text-gray-700">
         <p>🧮 Quantity: {task.numberSelection}</p>
         <p>
@@ -49,13 +48,11 @@ function TaskItem({ task }) {
             {task.prioritySelection}
           </span>
         </p>
-
-        {/* زر Toggle لإتمام المهمة */}
         <label className="flex items-center gap-2">
           <input
             type="checkbox"
             checked={task.completed}
-            onClick={handleToggleCompleted} // تأكد من الحدث المستخدم
+            onChange={(e) => handleToggleCompleted(e)} // معالج التبديل
             className="h-5 w-5 accent-green-600"
           />
           <span className={task.completed ? "text-green-600" : "text-red-500"}>
@@ -68,9 +65,9 @@ function TaskItem({ task }) {
         </p>
       </div>
 
-      {/* زر الحذف */}
+      {/* Delete button */}
       <div className="absolute top-3 right-3">
-        <Button type="delete" onClick={handleDelete}>
+        <Button type="delete" onClick={() => handleDelete()}>
           <Trash2 size={20} />
         </Button>
       </div>

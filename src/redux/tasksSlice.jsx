@@ -136,8 +136,6 @@ export const {
   setToggleCompleted,
   addNewTask,
   resetForm,
-  toggleTaskCompleted,
-  deleteTask,
   deleteAllTasks,
   setSearch,
   setTasksFromSupabase,
