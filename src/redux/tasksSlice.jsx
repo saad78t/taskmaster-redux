@@ -47,25 +47,27 @@ const sliceOperations = createSlice({
       state.taskDescription = action.payload;
     },
     setSearch: (state, action) => {
-      const searchTerm = action.payload.toLowerCase();
-      state.search = action.payload;
+      // Ensure that action.payload is a string before applying toLowerCase
+      // If it's not a string, set searchTerm to an empty string
+      const searchTerm =
+        typeof action.payload === "string" ? action.payload.toLowerCase() : "";
 
-      state.searchResult = state.tasks.filter((task) =>
-        task.taskName.toLowerCase().includes(searchTerm)
-      );
+      // Store the search term as a string, not a function or anything else
+      state.search = searchTerm;
+
+      // Update the search result based on the task names
+      // If state.tasks exists, filter through tasks to find matches with the search term
+      // If state.tasks is undefined or empty, return an empty array
+      state.searchResult = state.tasks
+        ? state.tasks.filter((task) =>
+            task.taskName.toLowerCase().includes(searchTerm)
+          )
+        : []; // Return an empty array if tasks are undefined or empty
     },
+
     setTasksFromSupabase: (state, action) => {
       state.tasks = action.payload;
     },
-
-    // setSearch: (state, action) => {
-    //   state.search = action.payload.toLowerCase();
-
-    //   //// Filter tasks based on search
-    //   state.searchResult = state.tasks.filter((task) =>
-    //     task.taskName.toLowerCase().includes(state.search)
-    //   );
-    // },
 
     addNewTask: (state, action) => {
       // const {
@@ -94,35 +96,27 @@ const sliceOperations = createSlice({
       state.taskDescription = "";
     },
 
-    // toggleTaskCompleted: (state, action) => {
-    //   const taskId = action.payload;
-
-    //   // Find the task in tasks
-    //   const task = state.tasks.find((task) => task.id === taskId);
-    //   if (task) {
-    //     // Update the complete status of the task in tasks
-    //     task.completed = !task.completed;
-    //     // Update the searchResul if the task is in the result
-    //     state.searchResult = state.tasks.filter((task) =>
-    //       task.taskName.toLowerCase().includes(state.search)
-    //     );
-    //   }
-    // },
-
-    /*     deleteTask: (state, action) => {
-      // Delete the task from tasks
-      state.tasks = state.tasks.filter((task) => task.id !== action.payload);
-      // Update the searchResult after deletion (there should be no effect on the filter)
-      state.searchResult = state.tasks.filter((task) =>
-        task.taskName.toLowerCase().includes(state.search)
-      );
-    }, */
+    deleteTaskFromState: (state, action) => {
+      const taskId = action.payload;
+      state.tasks = state.tasks.filter((task) => task.id !== taskId);
+      state.searchResult = state.search
+        ? state.tasks.filter((task) =>
+            task.taskName.toLowerCase().includes(state.search.toLowerCase())
+          )
+        : state.tasks;
+    },
 
     deleteAllTasks: (state) => {
       state.tasks = [];
     },
     setLoading: (state, action) => {
       state.isLoading = action.payload;
+    },
+    toggleTaskCompleted: (state, action) => {
+      const task = state.tasks.find((t) => t.id === action.payload);
+      if (task) {
+        task.completed = !task.completed;
+      }
     },
   },
 });
@@ -133,13 +127,14 @@ export const {
   setClassification,
   setTaskName,
   setTaskDescription,
-  setToggleCompleted,
   addNewTask,
   resetForm,
   deleteAllTasks,
   setSearch,
   setTasksFromSupabase,
   setLoading,
+  toggleTaskCompleted,
+  deleteTaskFromState,
 } = sliceOperations.actions;
 
 export default sliceOperations.reducer;
