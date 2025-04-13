@@ -10,6 +10,7 @@ lerna-debug.log*
 node_modules
 notifications.js
 problems.txt
+explanation dispatch and action creator.pdf
 problems_screenshots
 dist
 dist-ssr

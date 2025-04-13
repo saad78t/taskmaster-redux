@@ -85,7 +85,7 @@ function TaskList() {
 
       {!isLoading && tasks.length > 0 && (
         <>
-          <div className="mb-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div className="mb-4 flex flex-col gap-4 sm:flex-row sm:justify-between sm:items-center">
             <Search />
             <Filter />
           </div>
