@@ -9,6 +9,8 @@ import { deleteAllTask } from "../services/apiTasks";
 
 function TaskList() {
   const dispatch = useDispatch();
+  //This line makes the TaskList component update automatically when a task is deleted or modified
+  //This line is primarily responsible for linking the component to Redux.
   const { tasks, search, isLoading, sortBy } = useSelector(
     (state) => state.operations
   );

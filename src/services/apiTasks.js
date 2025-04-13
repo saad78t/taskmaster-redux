@@ -44,9 +44,9 @@ export async function deleteAllTask() {
 export async function updateTaskCompleted(id, completed) {
   const { data, error } = await supabase
     .from("tasks")
-    .update({ completed })
-    .eq("id", id)
-    .select();
+    .update({ completed }) //Update only one field named completed with a new value (true or false).
+    .eq("id", id) //Update only the line with id 123.
+    .select(); // Give me back the updated line
 
   if (error) {
     console.error("Error updating task:", error.message);

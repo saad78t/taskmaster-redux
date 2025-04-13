@@ -32,7 +32,7 @@ export const fetchTasksFromSupabase = () => async (dispatch) => {
 export const toggleTaskCompletedThunk = (id, completed) => async (dispatch) => {
   try {
     const updatedTask = await updateTaskCompleted(id, completed);
-    dispatch(toggleTaskCompleted(updatedTask)); // نحدث الـ Redux
+    dispatch(toggleTaskCompleted(updatedTask));
   } catch (error) {
     console.error("Failed to toggle task:", error.message);
   }
@@ -40,8 +40,8 @@ export const toggleTaskCompletedThunk = (id, completed) => async (dispatch) => {
 
 export const deleteTaskThunk = (id) => async (dispatch) => {
   try {
-    await deleteTask(id); // حذف من Supabase
-    dispatch(deleteTaskFromState(id)); // حذف من Redux
+    await deleteTask(id); // Delete from Supabase
+    dispatch(deleteTaskFromState(id)); // Remove from Redux
   } catch (error) {
     console.error("Failed to delete task:", error.message);
   }
@@ -123,7 +123,7 @@ const sliceOperations = createSlice({
       const updated = action.payload;
       const index = state.tasks.findIndex((t) => t.id === updated.id);
       if (index !== -1) {
-        state.tasks[index] = updated;
+        state.tasks[index] = updated; //Replace the old version with the updated one to update the user interface.
       }
     },
 
