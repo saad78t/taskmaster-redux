@@ -1,51 +1,18 @@
-import { useDispatch, useSelector } from "react-redux";
-import {
-  deleteTaskFromState,
-  fetchTasksFromSupabase,
-  setSearch,
-  toggleTaskCompleted,
-} from "../redux/tasksSlice";
-import { deleteTask } from "../services/apiTasks";
+import { useDispatch } from "react-redux";
+import { deleteTaskThunk, toggleTaskCompletedThunk } from "../redux/tasksSlice";
 import Button from "../ui/Button";
 import { Trash2 } from "lucide-react";
-import { updateTaskCompleted } from "../services/apiTasks";
 
 function TaskItem({ task }) {
   const dispatch = useDispatch();
-  const search = useSelector((state) => state.operations.search);
 
-  async function handleToggle() {
-    // Optimistically update UI first, without waiting for server response
-    dispatch(toggleTaskCompleted(task.id)); // Update task immediately
+  const handleToggle = () => {
+    dispatch(toggleTaskCompletedThunk(task.id, !task.completed));
+  };
 
-    try {
-      // Wait for the API response
-      await updateTaskCompleted(task.id, !task.completed);
-
-      // Ensure search term is set properly
-      dispatch(setSearch(search)); // Apply search after the update
-    } catch (error) {
-      // If there is an error, revert the UI
-      dispatch(toggleTaskCompleted(task.id)); // Revert the UI if update fails
-      alert(
-        `An error occurred while updating the task status: ${error.message}`
-      );
-      console.error("Error updating task status:", error);
-    }
-  }
-
-  // Optimistically update the UI by removing the task from the state immediately
-  async function handleDelete() {
-    dispatch(deleteTaskFromState(task.id)); // Optimistically update the UI (remove the task from the UI directly)
-
-    try {
-      await deleteTask(task.id); // Delete the task from the server
-    } catch (error) {
-      dispatch(fetchTasksFromSupabase()); // If an error occurs, we reload the data from the server (or return)
-      console.error("Error deleting task:", error.message);
-      alert("An error occurred while deleting the task. Please try again.");
-    }
-  }
+  const handleDelete = () => {
+    dispatch(deleteTaskThunk(task.id));
+  };
 
   return (
     <div className="relative flex flex-col gap-3 p-4 bg-white rounded-2xl shadow-md border border-blue-100 transition hover:shadow-lg max-w-xl mx-auto">

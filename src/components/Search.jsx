@@ -7,7 +7,7 @@ function Search() {
   const dispatch = useDispatch();
 
   return (
-    <div className="flex items-center gap-2 bg-white border border-gray-300 rounded-md shadow-sm px-3 py-2 w-full max-w-md mx-auto mb-6">
+    <div className="flex items-center gap-2 bg-white border border-gray-300 rounded-md shadow-sm px-3 py-2 w-full sm:w-72">
       <SearchIcon className="text-gray-400" size={18} />
       <input
         type="text"

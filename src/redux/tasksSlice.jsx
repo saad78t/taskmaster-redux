@@ -1,5 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getTasks } from "../services/apiTasks";
+import { updateTaskCompleted } from "../services/apiTasks";
+import { deleteTask } from "../services/apiTasks";
 
 const initialState = {
   numberSelection: 1,
@@ -11,7 +13,7 @@ const initialState = {
   tasks: [],
   search: "",
   isLoading: false,
-  searchResult: [],
+  sortBy: "input",
 };
 
 // thunk to fetch tasks from Supabase and update Redux
@@ -24,6 +26,24 @@ export const fetchTasksFromSupabase = () => async (dispatch) => {
     console.error("Error fetching tasks from Supabase:", error);
   } finally {
     dispatch(setLoading(false));
+  }
+};
+
+export const toggleTaskCompletedThunk = (id, completed) => async (dispatch) => {
+  try {
+    const updatedTask = await updateTaskCompleted(id, completed);
+    dispatch(toggleTaskCompleted(updatedTask)); // نحدث الـ Redux
+  } catch (error) {
+    console.error("Failed to toggle task:", error.message);
+  }
+};
+
+export const deleteTaskThunk = (id) => async (dispatch) => {
+  try {
+    await deleteTask(id); // حذف من Supabase
+    dispatch(deleteTaskFromState(id)); // حذف من Redux
+  } catch (error) {
+    console.error("Failed to delete task:", error.message);
   }
 };
 
@@ -47,24 +67,9 @@ const sliceOperations = createSlice({
       state.taskDescription = action.payload;
     },
     setSearch: (state, action) => {
-      // Ensure that action.payload is a string before applying toLowerCase
-      // If it's not a string, set searchTerm to an empty string
-      const searchTerm =
+      state.search =
         typeof action.payload === "string" ? action.payload.toLowerCase() : "";
-
-      // Store the search term as a string, not a function or anything else
-      state.search = searchTerm;
-
-      // Update the search result based on the task names
-      // If state.tasks exists, filter through tasks to find matches with the search term
-      // If state.tasks is undefined or empty, return an empty array
-      state.searchResult = state.tasks
-        ? state.tasks.filter((task) =>
-            task.taskName.toLowerCase().includes(searchTerm)
-          )
-        : []; // Return an empty array if tasks are undefined or empty
     },
-
     setTasksFromSupabase: (state, action) => {
       state.tasks = action.payload;
     },
@@ -99,11 +104,6 @@ const sliceOperations = createSlice({
     deleteTaskFromState: (state, action) => {
       const taskId = action.payload;
       state.tasks = state.tasks.filter((task) => task.id !== taskId);
-      state.searchResult = state.search
-        ? state.tasks.filter((task) =>
-            task.taskName.toLowerCase().includes(state.search.toLowerCase())
-          )
-        : state.tasks;
     },
 
     deleteAllTasks: (state) => {
@@ -112,11 +112,23 @@ const sliceOperations = createSlice({
     setLoading: (state, action) => {
       state.isLoading = action.payload;
     },
-    toggleTaskCompleted: (state, action) => {
+    /*     toggleTaskCompleted: (state, action) => {
       const task = state.tasks.find((t) => t.id === action.payload);
       if (task) {
         task.completed = !task.completed;
       }
+    },
+ */
+    toggleTaskCompleted: (state, action) => {
+      const updated = action.payload;
+      const index = state.tasks.findIndex((t) => t.id === updated.id);
+      if (index !== -1) {
+        state.tasks[index] = updated;
+      }
+    },
+
+    setSortBy: (state, action) => {
+      state.sortBy = action.payload;
     },
   },
 });
@@ -135,6 +147,7 @@ export const {
   setLoading,
   toggleTaskCompleted,
   deleteTaskFromState,
+  setSortBy,
 } = sliceOperations.actions;
 
 export default sliceOperations.reducer;

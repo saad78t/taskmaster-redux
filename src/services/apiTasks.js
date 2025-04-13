@@ -1,7 +1,10 @@
 import supabase from "./supabase";
 
 export async function getTasks() {
-  let { data: tasks, error } = await supabase.from("tasks").select("*");
+  let { data: tasks, error } = await supabase
+    .from("tasks")
+    .select("*")
+    .order("created_at", { ascending: true });
   if (error) {
     console.error(error);
     throw new Error("Tasks could not be loaded");
@@ -19,7 +22,7 @@ export async function deleteTask(id) {
 }
 
 export async function deleteAllTask() {
-  const { error } = await supabase.from("tasks").delete().gt("id", 0); // احذف كل المهام التي id أكبر من 0
+  const { error } = await supabase.from("tasks").delete().gt("id", 0); // Delete all tasks with id greater than 0
 
   if (error) {
     console.error("Error deleting all tasks:", error.message);
@@ -29,11 +32,26 @@ export async function deleteAllTask() {
   }
 }
 
+// export async function updateTaskCompleted(id, completed) {
+//   const { error } = await supabase
+//     .from("tasks")
+//     .update({ completed })
+//     .eq("id", id);
+
+//   if (error) throw new Error("Failed to update task status");
+// }
+
 export async function updateTaskCompleted(id, completed) {
-  const { error } = await supabase
+  const { data, error } = await supabase
     .from("tasks")
     .update({ completed })
-    .eq("id", id);
+    .eq("id", id)
+    .select();
 
-  if (error) throw new Error("Failed to update task status");
+  if (error) {
+    console.error("Error updating task:", error.message);
+    throw new Error("Failed to update task.");
+  }
+
+  return data[0]; // Return the updated task
 }
