@@ -75,3 +75,24 @@ export const updateTask = async (updatedTask) => {
 
   return data;
 };
+
+export async function uploadImageToSupabase(file) {
+  const fileExt = file.name.split(".").pop();
+  const fileName = `${Date.now()}.${fileExt}`;
+  const filePath = `${fileName}`;
+
+  const { data, error } = await supabase.storage
+    .from("pictures")
+    .upload(filePath, file);
+
+  if (error) {
+    console.error("Upload error:", error.message);
+    throw error;
+  }
+
+  const { data: publicUrlData } = supabase.storage
+    .from("pictures")
+    .getPublicUrl(filePath);
+
+  return publicUrlData.publicUrl;
+}

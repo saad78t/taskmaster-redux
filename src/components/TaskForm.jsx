@@ -14,6 +14,8 @@ import {
   resetForm,
 } from "../redux/tasksSlice";
 import supabase from "../services/supabase";
+import { useState } from "react";
+import { uploadImageToSupabase } from "../services/apiTasks";
 
 function TaskForm() {
   const { errors, validate } = useValidation();
@@ -33,7 +35,9 @@ function TaskForm() {
   );
 
   const completed = useSelector((state) => state.operations?.completed);
+  const [imageFile, setImageFile] = useState(null);
 
+  // const imageUrl = useSelector((state) => state.operations?.imageUrl);
   const dispatch = useDispatch();
 
   async function handleSubmit(e) {
@@ -50,6 +54,17 @@ function TaskForm() {
 
     if (!taskName || !taskDescription || !prioritySelection || !classification)
       return;
+
+    let imageUrl = "";
+
+    if (imageFile) {
+      try {
+        imageUrl = await uploadImageToSupabase(imageFile); // Upload the image first
+      } catch (err) {
+        console.error("Image upload failed:", err);
+        return;
+      }
+    }
     const { data, error } = await supabase
       .from("tasks")
       .insert([
@@ -60,6 +75,7 @@ function TaskForm() {
           prioritySelection,
           classification,
           completed,
+          imageUrl,
         },
       ])
       .select();
@@ -117,6 +133,15 @@ function TaskForm() {
         {errors.taskDescription && (
           <p className="text-red-600 text-sm mt-1">{errors.taskDescription}</p>
         )}
+        <div>
+          <label className="block font-semibold">Upload Image</label>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) => setImageFile(e.target.files[0])}
+            className="mt-2"
+          />
+        </div>
 
         <Button
           type="submit"

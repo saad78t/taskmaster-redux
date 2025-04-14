@@ -53,6 +53,13 @@ function TaskItem({ task }) {
           <span className="text-purple-600">{task.classification}</span>
         </p>
       </div>
+      {task.imageUrl && (
+        <img
+          src={task.imageUrl}
+          alt={task.taskName}
+          className="w-full max-w-xs rounded-xl border border-gray-300 mt-2"
+        />
+      )}
 
       {/* Delete button */}
       <div className="absolute top-3 right-3">
