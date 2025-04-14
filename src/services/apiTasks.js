@@ -58,7 +58,7 @@ export async function updateTaskCompleted(id, completed) {
 
 export const updateTask = async (updatedTask) => {
   const { data, error } = await supabase
-    .from("tasks") // اسم الجدول في Supabase
+    .from("tasks")
     .update({
       taskName: updatedTask.taskName,
       taskDescription: updatedTask.taskDescription,
@@ -67,11 +67,11 @@ export const updateTask = async (updatedTask) => {
       classification: updatedTask.classification,
       completed: updatedTask.completed,
     })
-    .eq("id", updatedTask.id); // هنا نستخدم `.eq` لتحديد الـ id الخاص بالمهمة
+    .eq("id", updatedTask.id);
 
   if (error) {
     throw new Error(`Failed to update task: ${error.message}`);
   }
 
-  return data; // البيانات التي تم تحديثها
+  return data;
 };

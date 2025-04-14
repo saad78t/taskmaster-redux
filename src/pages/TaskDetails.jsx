@@ -1,9 +1,12 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchTasksFromSupabase } from "../redux/tasksSlice";
-import { handleSave } from "../services/taskUtils"; // تأكد من استيراد handleSave
+import { handleSave } from "../services/taskUtils";
 import Button from "../ui/Button";
 import { useEffect, useMemo, useState } from "react";
+import SelectPriority from "../components/SelectPriority";
+import Classification from "../components/Classification";
+import SelectNumber from "../components/SelectNumber";
 
 function TaskDetails() {
   const { id } = useParams();
@@ -110,31 +113,30 @@ function TaskDetails() {
         </div>
         <div>
           <label className="block font-semibold">Quantity</label>
-          <input
-            type="number"
+          <SelectNumber
             value={numberSelection}
             onChange={(e) => setNumberSelection(e.target.value)}
-            className="w-full border p-2 rounded"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 focus:ring-blue-500 focus:border-blue-500"
           />
         </div>
         <div>
           <label className="block font-semibold">Priority</label>
-          <input
-            type="text"
+          <SelectPriority
             value={prioritySelection}
             onChange={(e) => setPrioritySelection(e.target.value)}
-            className="w-full border p-2 rounded"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 focus:ring-blue-500 focus:border-blue-500"
           />
         </div>
+
         <div>
           <label className="block font-semibold">Classification</label>
-          <input
-            type="text"
+          <Classification
             value={classification}
             onChange={(e) => setClassification(e.target.value)}
-            className="w-full border p-2 rounded"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 focus:ring-blue-500 focus:border-blue-500"
           />
         </div>
+
         <div>
           <label className="block font-semibold">Completed</label>
           <input

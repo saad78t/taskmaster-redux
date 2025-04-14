@@ -20,6 +20,15 @@ export const handleSave = async (
     completed,
   };
 
-  // Send the update to Redux and Supabase
-  await dispatch(updateTaskThunk(updatedTask));
+  if (!taskName.trim()) {
+    console.warn("Task name is required.");
+    return;
+  }
+
+  try {
+    // Send the update to Redux and Supabase
+    await dispatch(updateTaskThunk(updatedTask));
+  } catch (error) {
+    console.error("Failed to update task:", error);
+  }
 };

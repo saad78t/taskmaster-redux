@@ -1,10 +1,6 @@
-function SelectNumber({ value, onChange }) {
+function SelectNumber({ value, onChange, className = "" }) {
   return (
-    <select
-      className="bg-gray-50 border border-gray-300 rounded"
-      value={value}
-      onChange={onChange}
-    >
+    <select value={value} onChange={onChange} className={className}>
       {Array.from({ length: 20 }, (_, i) => i + 1).map((num) => (
         <option value={num} key={num}>
           {num}
