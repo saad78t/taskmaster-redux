@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { deleteTaskThunk, toggleTaskCompletedThunk } from "../redux/tasksSlice";
 import Button from "../ui/Button";
@@ -16,10 +17,12 @@ function TaskItem({ task }) {
 
   return (
     <div className="relative flex flex-col gap-3 p-4 bg-white rounded-2xl shadow-md border border-blue-100 transition hover:shadow-lg max-w-xl mx-auto">
-      {/* Task name */}
-      <h3 className="text-lg font-bold text-blue-700 flex items-center gap-2">
-        📌 {task.taskName}
-      </h3>
+      <Link to={`/task/${task.id}`}>
+        {/* Task name */}
+        <h3 className="text-lg font-bold text-blue-700 flex items-center gap-2">
+          📌 {task.taskName}
+        </h3>
+      </Link>
 
       {/* Task details */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-2 gap-x-8 text-sm text-gray-700">

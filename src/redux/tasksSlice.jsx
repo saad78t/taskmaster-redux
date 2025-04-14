@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getTasks } from "../services/apiTasks";
+import { getTasks, updateTask } from "../services/apiTasks";
 import { updateTaskCompleted } from "../services/apiTasks";
 import { deleteTask } from "../services/apiTasks";
 
@@ -14,6 +14,8 @@ const initialState = {
   search: "",
   isLoading: false,
   sortBy: "input",
+  hasFetchedOnce: false,
+  error: null,
 };
 
 // thunk to fetch tasks from Supabase and update Redux
@@ -22,8 +24,10 @@ export const fetchTasksFromSupabase = () => async (dispatch) => {
     dispatch(setLoading(true));
     const tasks = await getTasks(); // Fetch tasks from Supabase
     dispatch(setTasksFromSupabase(tasks)); // Update state
+    dispatch(setHasFetchedOnce(true)); // appoint the flag after the fetch
   } catch (error) {
     console.error("Error fetching tasks from Supabase:", error);
+    dispatch(setError(error.message)); // Save the error in the state
   } finally {
     dispatch(setLoading(false));
   }
@@ -44,6 +48,17 @@ export const deleteTaskThunk = (id) => async (dispatch) => {
     dispatch(deleteTaskFromState(id)); // Remove from Redux
   } catch (error) {
     console.error("Failed to delete task:", error.message);
+  }
+};
+
+// Add a thunk to update the task in Supabase
+export const updateTaskThunk = (updatedTask) => async (dispatch) => {
+  try {
+    // Update the task in Supabase or database
+    await updateTask(updatedTask); // Suppose updateTask is the API for updating tasks in Supabase.
+    dispatch(updateTaskInState(updatedTask)); // Update Redux
+  } catch (error) {
+    console.error("Error updating task:", error);
   }
 };
 
@@ -130,6 +145,26 @@ const sliceOperations = createSlice({
     setSortBy: (state, action) => {
       state.sortBy = action.payload;
     },
+    setHasFetchedOnce: (state, action) => {
+      state.hasFetchedOnce = action.payload;
+    },
+
+    // Add an action to set the error in the state
+    setError: (state, action) => {
+      state.error = action.payload;
+    },
+
+    // Remove the error after handling it (optional)
+    clearError: (state) => {
+      state.error = null;
+    },
+    updateTaskInState: (state, action) => {
+      const updatedTask = action.payload;
+      const index = state.tasks.findIndex((task) => task.id === updatedTask.id);
+      if (index !== -1) {
+        state.tasks[index] = updatedTask; // Update the task in the state
+      }
+    },
   },
 });
 
@@ -148,6 +183,10 @@ export const {
   toggleTaskCompleted,
   deleteTaskFromState,
   setSortBy,
+  setHasFetchedOnce,
+  setError,
+  clearError,
+  updateTaskInState,
 } = sliceOperations.actions;
 
 export default sliceOperations.reducer;
