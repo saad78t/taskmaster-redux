@@ -3,6 +3,7 @@ import Button from "../ui/Button";
 import Classification from "./Classification";
 import SelectNumber from "./SelectNumber";
 import SelectPriority from "./SelectPriority";
+import { useValidation } from "../hooks/useValidation";
 import {
   setNumberSelection,
   setPrioritySelection,
@@ -15,6 +16,7 @@ import {
 import supabase from "../services/supabase";
 
 function TaskForm() {
+  const { errors, validate } = useValidation();
   const taskName = useSelector((state) => state.operations?.taskName);
   const taskDescription = useSelector(
     (state) => state.operations?.taskDescription
@@ -36,6 +38,16 @@ function TaskForm() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+
+    const newErrors = validate({
+      taskName,
+      prioritySelection,
+      classification,
+      taskDescription,
+    });
+    // If there are errors inside the newErrors object, do not continue executing the function (i.e. do not save or add).
+    if (Object.keys(newErrors).length > 0) return;
+
     if (!taskName || !taskDescription || !prioritySelection || !classification)
       return;
     const { data, error } = await supabase
@@ -73,11 +85,18 @@ function TaskForm() {
           value={prioritySelection}
           onChange={(e) => dispatch(setPrioritySelection(e.target.value))}
         />
+        {errors.prioritySelection && (
+          <p className="text-red-600 text-sm mt-1">
+            {errors.prioritySelection}
+          </p>
+        )}
         <Classification
           value={classification}
           onChange={(e) => dispatch(setClassification(e.target.value))}
         />
-
+        {errors.classification && (
+          <p className="text-red-600 text-sm mt-1">{errors.classification}</p>
+        )}
         <input
           value={taskName}
           onChange={(e) => dispatch(setTaskName(e.target.value))}
@@ -85,6 +104,9 @@ function TaskForm() {
           placeholder="Enter task name..."
           type="text"
         />
+        {errors.taskName && (
+          <p className="text-red-600 text-sm mt-1">{errors.taskName}</p>
+        )}
         <input
           value={taskDescription}
           onChange={(e) => dispatch(setTaskDescription(e.target.value))}
@@ -92,6 +114,9 @@ function TaskForm() {
           placeholder="Enter task description..."
           type="text"
         />
+        {errors.taskDescription && (
+          <p className="text-red-600 text-sm mt-1">{errors.taskDescription}</p>
+        )}
 
         <Button
           type="submit"
