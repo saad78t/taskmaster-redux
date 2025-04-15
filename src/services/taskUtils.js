@@ -8,25 +8,35 @@ export const handleSave = async (
   prioritySelection,
   classification,
   completed,
+  imageUrl,
   dispatch
 ) => {
+  // تحقق من أن taskName هو سلسلة نصية قبل استخدام trim()
+  if (typeof taskName !== "string") {
+    console.warn("taskName يجب أن يكون من نوع string.");
+    return;
+  }
+
+  // تحديث task بالمعلومات الجديدة
   const updatedTask = {
     ...task,
-    taskName,
+    taskName: taskName.trim(), // استخدام trim فقط إذا كانت قيمة taskName سلسلة نصية
     taskDescription,
     numberSelection,
     prioritySelection,
     classification,
     completed,
+    imageUrl,
   };
 
+  // تحقق من وجود اسم المهمة
   if (!taskName.trim()) {
     console.warn("Task name is required.");
     return;
   }
 
   try {
-    // Send the update to Redux and Supabase
+    // إرسال التحديث إلى Redux و Supabase
     await dispatch(updateTaskThunk(updatedTask));
   } catch (error) {
     console.error("Failed to update task:", error);

@@ -66,6 +66,7 @@ export const updateTask = async (updatedTask) => {
       prioritySelection: updatedTask.prioritySelection,
       classification: updatedTask.classification,
       completed: updatedTask.completed,
+      imageUrl: updatedTask.imageUrl,
     })
     .eq("id", updatedTask.id);
 
@@ -76,23 +77,38 @@ export const updateTask = async (updatedTask) => {
   return data;
 };
 
-export async function uploadImageToSupabase(file) {
-  const fileExt = file.name.split(".").pop();
-  const fileName = `${Date.now()}.${fileExt}`;
-  const filePath = `${fileName}`;
+export async function uploadImageToSupabase(file, oldImageUrl = null) {
+  const picturesBucket = supabase.storage.from("pictures");
 
-  const { data, error } = await supabase.storage
-    .from("pictures")
-    .upload(filePath, file);
+  // Extract the old image path from the URL, if any.
+  if (oldImageUrl) {
+    const oldPath = oldImageUrl.split("/storage/v1/object/public/pictures/")[1];
 
-  if (error) {
-    console.error("Upload error:", error.message);
-    throw error;
+    if (oldPath) {
+      const { error: deleteError } = await picturesBucket.remove([oldPath]);
+      if (deleteError) {
+        console.error("❌ Failed to delete old image:", deleteError.message);
+        throw new Error("Failed to delete old image");
+      }
+      console.log("🗑️ Old photo deleted successfully:", oldPath);
+    } else {
+      console.warn("⚠️ The image path was not extracted from the old link.");
+    }
   }
 
-  const { data: publicUrlData } = supabase.storage
-    .from("pictures")
-    .getPublicUrl(filePath);
+  //It is responsible for fetching the final image link (which you can use in your interface or store in the database), after the image has been uploaded.
+  const fileExt = file.name.split(".").pop();
+  const fileName = `${Date.now()}.${fileExt}`; //This specifies the package (main folder) that contains the images which is "pictures".
+  const filePath = `tasks/${fileName}`; //This function asks Supabase for a public URL to the image whose path is filePath.
+
+  const { error: uploadError } = await picturesBucket.upload(filePath, file);
+  if (uploadError) {
+    console.error("🚫 Image upload error:", uploadError.message);
+    throw uploadError;
+  }
+
+  const { data: publicUrlData } = picturesBucket.getPublicUrl(filePath);
+  console.log("✅ New image uploaded:", publicUrlData.publicUrl);
 
   return publicUrlData.publicUrl;
 }

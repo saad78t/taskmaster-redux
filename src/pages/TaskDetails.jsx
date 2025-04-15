@@ -8,6 +8,7 @@ import SelectPriority from "../components/SelectPriority";
 import Classification from "../components/Classification";
 import SelectNumber from "../components/SelectNumber";
 import { useValidation } from "../hooks/useValidation";
+import { uploadImageToSupabase } from "../services/apiTasks";
 
 function TaskDetails() {
   const { id } = useParams();
@@ -37,6 +38,12 @@ function TaskDetails() {
   const [prioritySelection, setPrioritySelection] = useState("");
   const [classification, setClassification] = useState("");
   const [completed, setCompleted] = useState(task?.completed || false);
+  const [imageFile, setImageFile] = useState(null);
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    setImageFile(file); // Store the new image in the state
+  };
 
   //To solve the problem of emptying fields after reloading the page
   useEffect(() => {
@@ -50,7 +57,6 @@ function TaskDetails() {
     }
   }, [task]);
 
-  // Function to update the task when the save button is clicked
   const handleUpdateClick = async () => {
     const newErrors = validate({
       taskName,
@@ -59,8 +65,22 @@ function TaskDetails() {
       taskDescription,
     });
 
-    if (Object.keys(newErrors).length > 0) return; //If there are errors inside the newErrors object, do not continue executing the function (i.e. do not save or add).
+    if (Object.keys(newErrors).length > 0) return;
 
+    let imageUrl = task?.imageUrl;
+
+    // If there is a new image, upload it and let uploadImageToSupabase take care of deleting the old one.
+    if (imageFile) {
+      try {
+        imageUrl = await uploadImageToSupabase(imageFile, task?.imageUrl);
+        console.log("✅ New image uploaded:", imageUrl);
+      } catch (err) {
+        console.error("❌ Image upload failed:", err);
+        return;
+      }
+    }
+
+    // Call the function that saves the task
     await handleSave(
       task,
       taskName,
@@ -69,6 +89,7 @@ function TaskDetails() {
       prioritySelection,
       classification,
       completed,
+      imageUrl,
       dispatch
     );
   };
@@ -168,6 +189,21 @@ function TaskDetails() {
             <p className="text-red-600 text-sm mt-1">{errors.classification}</p>
           )}
         </div>
+        <div>
+          <img src={task.imageUrl} alt="task" width={100} height={100} />
+        </div>
+        <div>
+          <label htmlFor="image-upload" className="btn">
+            Change Image
+          </label>
+          <input
+            type="file"
+            id="image-upload"
+            accept="image/*"
+            onChange={handleImageChange}
+            style={{ display: "none" }}
+          />
+        </div>
 
         <div>
           <label className="block font-semibold">Completed</label>
@@ -178,7 +214,7 @@ function TaskDetails() {
           />
         </div>
         <div className="mt-6">
-          <Button onClick={handleUpdateClick}>Save Changes</Button>{" "}
+          <Button onClick={handleUpdateClick}>Save Changes</Button>
         </div>
       </div>
     </div>

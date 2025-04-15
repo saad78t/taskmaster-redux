@@ -59,6 +59,8 @@ function TaskForm() {
 
     if (imageFile) {
       try {
+        // It will not cause any error because oldImageUrl has a default value = null in the original function.
+        // It will not cause any error because oldImageUrl has a default value = null in the original function.
         imageUrl = await uploadImageToSupabase(imageFile); // Upload the image first
       } catch (err) {
         console.error("Image upload failed:", err);
