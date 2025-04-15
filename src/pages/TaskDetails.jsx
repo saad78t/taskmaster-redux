@@ -9,6 +9,7 @@ import Classification from "../components/Classification";
 import SelectNumber from "../components/SelectNumber";
 import { useValidation } from "../hooks/useValidation";
 import { uploadImageToSupabase } from "../services/apiTasks";
+import toast from "react-hot-toast";
 
 function TaskDetails() {
   const { id } = useParams();
@@ -39,6 +40,8 @@ function TaskDetails() {
   const [classification, setClassification] = useState("");
   const [completed, setCompleted] = useState(task?.completed || false);
   const [imageFile, setImageFile] = useState(null);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const [countdown, setCountdown] = useState(0);
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -58,6 +61,12 @@ function TaskDetails() {
   }, [task]);
 
   const handleUpdateClick = async () => {
+    if (isButtonDisabled) return;
+
+    // Disable the button and start the countdown
+    setIsButtonDisabled(true);
+    setCountdown(5);
+
     const newErrors = validate({
       taskName,
       prioritySelection,
@@ -65,22 +74,26 @@ function TaskDetails() {
       taskDescription,
     });
 
-    if (Object.keys(newErrors).length > 0) return;
+    if (Object.keys(newErrors).length > 0) {
+      setIsButtonDisabled(false);
+      setCountdown(0);
+      return;
+    }
 
     let imageUrl = task?.imageUrl;
 
-    // If there is a new image, upload it and let uploadImageToSupabase take care of deleting the old one.
-    if (imageFile) {
+    if (imageFile && imageFile.name !== task?.imageName) {
       try {
         imageUrl = await uploadImageToSupabase(imageFile, task?.imageUrl);
         console.log("✅ New image uploaded:", imageUrl);
       } catch (err) {
-        console.error("❌ Image upload failed:", err);
+        toast.error("❌ Image upload failed:", err);
+        setIsButtonDisabled(false); // Re-enable the button in case of error
+        setCountdown(0);
         return;
       }
     }
 
-    // Call the function that saves the task
     await handleSave(
       task,
       taskName,
@@ -92,7 +105,26 @@ function TaskDetails() {
       imageUrl,
       dispatch
     );
+
+    toast.success("The task was updated successfully.");
   };
+
+  useEffect(() => {
+    let timer;
+    if (isButtonDisabled && countdown > 0) {
+      timer = setInterval(() => {
+        setCountdown((prev) => {
+          if (prev <= 1) {
+            clearInterval(timer);
+            setIsButtonDisabled(false);
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+    }
+    return () => clearInterval(timer);
+  }, [isButtonDisabled, countdown]);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -214,7 +246,12 @@ function TaskDetails() {
           />
         </div>
         <div className="mt-6">
-          <Button onClick={handleUpdateClick}>Save Changes</Button>
+          <Button onClick={handleUpdateClick} disabled={isButtonDisabled}>
+            {/* {isUploading ? "Updating..." : "Save Changes"} */}
+            {isButtonDisabled
+              ? `Please wait ${countdown} seconds...`
+              : "Update Task"}
+          </Button>
         </div>
       </div>
     </div>

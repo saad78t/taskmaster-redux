@@ -14,8 +14,9 @@ import {
   resetForm,
 } from "../redux/tasksSlice";
 import supabase from "../services/supabase";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { uploadImageToSupabase } from "../services/apiTasks";
+import toast from "react-hot-toast";
 
 function TaskForm() {
   const { errors, validate } = useValidation();
@@ -39,6 +40,7 @@ function TaskForm() {
 
   // const imageUrl = useSelector((state) => state.operations?.imageUrl);
   const dispatch = useDispatch();
+  const fileInputRef = useRef(null);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -60,10 +62,9 @@ function TaskForm() {
     if (imageFile) {
       try {
         // It will not cause any error because oldImageUrl has a default value = null in the original function.
-        // It will not cause any error because oldImageUrl has a default value = null in the original function.
         imageUrl = await uploadImageToSupabase(imageFile); // Upload the image first
       } catch (err) {
-        console.error("Image upload failed:", err);
+        toast.error(err.message);
         return;
       }
     }
@@ -82,12 +83,17 @@ function TaskForm() {
       ])
       .select();
     if (error) {
-      console.error("Error adding task:", error.message);
+      toast.error(error.message);
       return;
     }
 
     dispatch(addNewTask(data[0]));
     dispatch(resetForm());
+
+    if (fileInputRef.current) {
+      fileInputRef.current.value = null;
+    }
+    toast.success("Task Added Successfully");
   }
 
   return (
@@ -139,6 +145,7 @@ function TaskForm() {
           <label className="block font-semibold">Upload Image</label>
           <input
             type="file"
+            ref={fileInputRef}
             accept="image/*"
             onChange={(e) => setImageFile(e.target.files[0])}
             className="mt-2"
@@ -149,7 +156,7 @@ function TaskForm() {
           type="submit"
           className="w-full bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-md"
         >
-          Submit
+          Add Task
         </Button>
       </form>
     </div>
