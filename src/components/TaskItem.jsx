@@ -12,7 +12,7 @@ function TaskItem({ task }) {
   };
 
   const handleDelete = () => {
-    dispatch(deleteTaskThunk(task.id));
+    dispatch(deleteTaskThunk(task.id, task.imageUrl));
   };
 
   return (

@@ -42,9 +42,9 @@ export const toggleTaskCompletedThunk = (id, completed) => async (dispatch) => {
   }
 };
 
-export const deleteTaskThunk = (id) => async (dispatch) => {
+export const deleteTaskThunk = (id, imageUrl) => async (dispatch) => {
   try {
-    await deleteTask(id); // Delete from Supabase
+    await deleteTask(id, imageUrl); // Delete from Supabase
     dispatch(deleteTaskFromState(id)); // Remove from Redux
   } catch (error) {
     console.error("Failed to delete task:", error.message);

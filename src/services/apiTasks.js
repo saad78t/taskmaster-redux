@@ -13,7 +13,52 @@ export async function getTasks() {
   return tasks;
 }
 
-export async function deleteTask(id) {
+/* export async function deleteTask(id, imageUrl = null) {
+  const { error } = await supabase.from("tasks").delete().eq("id", id);
+
+  if (error) {
+    console.error(error.message);
+    throw new Error("Tasks could not be deleted");
+  }
+
+  const picturesBucket = supabase.storage.from("pictures");
+
+  
+  if (imageUrl) {
+    const oldPath = imageUrl.split("/storage/v1/object/public/pictures/")[1];
+
+    if (oldPath) {
+      const { error: deleteError } = await picturesBucket.remove([oldPath]);
+      if (deleteError) {
+        console.error("❌ Failed to delete old image:", deleteError.message);
+        throw new Error("Failed to delete old image");
+      }
+      console.log("🗑️ Old photo deleted successfully:", oldPath);
+    } else {
+      console.warn("⚠️ The image path was not extracted from the old link.");
+    }
+  }
+} */
+
+export async function deleteTask(id, imageUrl = null) {
+  const picturesBucket = supabase.storage.from("pictures");
+
+  // Delete the image from storage first
+  if (imageUrl) {
+    const oldPath = imageUrl.split("/storage/v1/object/public/pictures/")[1];
+    if (oldPath) {
+      const { error: deleteError } = await picturesBucket.remove([oldPath]);
+      if (deleteError) {
+        console.error("❌ Failed to delete old image:", deleteError.message);
+        throw new Error("Failed to delete old image");
+      }
+      console.log("🗑️ Old photo deleted successfully:", oldPath);
+    } else {
+      console.warn("⚠️ The image path was not extracted from the old link.");
+    }
+  }
+
+  // Then delete the task from the database
   const { error } = await supabase.from("tasks").delete().eq("id", id);
   if (error) {
     console.error(error.message);
@@ -21,7 +66,7 @@ export async function deleteTask(id) {
   }
 }
 
-export async function deleteAllTask() {
+/* export async function deleteAllTask() {
   const { error } = await supabase.from("tasks").delete().gt("id", 0); // Delete all tasks with id greater than 0
 
   if (error) {
@@ -29,6 +74,49 @@ export async function deleteAllTask() {
     throw new Error("Tasks could not be deleted");
   } else {
     console.log("All tasks deleted successfully.");
+  }
+} */
+
+export async function deleteAllTask() {
+  // 1. Retrieve all tasks first
+  // 1. استرجاع جميع المهام أولاً
+  const { data: tasks, error: fetchError } = await supabase
+    .from("tasks")
+    .select("imageUrl");
+
+  if (fetchError) {
+    console.error("❌ Error fetching tasks:", fetchError.message);
+    throw new Error("Failed to fetch tasks before deletion.");
+  }
+
+  // 2. Delete linked images from storage
+  const picturesBucket = supabase.storage.from("pictures");
+
+  const imageUrls = tasks
+    .map((task) => task.imageUrl)
+    .filter(Boolean) // فقط الصور التي تحتوي على رابط
+    .map((url) => url.split("/storage/v1/object/public/pictures/")[1]); // استخراج اسم الملف فقط
+
+  if (imageUrls.length > 0) {
+    const { error: deleteImagesError } = await picturesBucket.remove(imageUrls);
+    if (deleteImagesError) {
+      console.error(
+        "❌ Failed to delete some or all images:",
+        deleteImagesError.message
+      );
+    } else {
+      console.log("🗑️ All related images deleted successfully.");
+    }
+  }
+
+  // 3. Delete all tasks from the Supabase table
+  const { error } = await supabase.from("tasks").delete().gt("id", 0);
+
+  if (error) {
+    console.error("❌ Error deleting all tasks:", error.message);
+    throw new Error("Tasks could not be deleted");
+  } else {
+    console.log("✅ All tasks deleted successfully.");
   }
 }
 
