@@ -89,6 +89,7 @@ function TaskForm() {
 
     dispatch(addNewTask(data[0]));
     dispatch(resetForm());
+    setImageFile(null);
 
     if (fileInputRef.current) {
       fileInputRef.current.value = null;
