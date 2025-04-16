@@ -1,12 +1,14 @@
 import Header from "../ui/Header";
 import Footer from "../ui/Footer";
 import { Outlet } from "react-router-dom";
+import DraggableButton from "../ui/DarkModeToggle";
 
 function AppLayout() {
   return (
     <div className="flex flex-col min-h-screen w-full">
       <Header />
-      <main className="flex-1 p-4 w-full max-w-full">
+      <DraggableButton />
+      <main className="flex-1 p-4 w-full max-w-full bg-white dark:bg-gray-800 text-black dark:text-white transition-all duration-300">
         <Outlet />
       </main>
       <Footer />

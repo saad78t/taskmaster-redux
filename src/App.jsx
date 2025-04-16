@@ -4,9 +4,24 @@ import TaskDetails from "./pages/TaskDetails";
 import AppLayout from "./layout/AppLayout";
 import { Toaster } from "react-hot-toast";
 import { getOrCreateUserId } from "./services/userId";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import useInitDarkMode from "./hooks/useInitDarkMode";
+
 function App() {
   const userId = getOrCreateUserId();
-  console.log(userId);
+  useInitDarkMode();
+
+  const isDarkMode = useSelector((state) => state.operations.isDarkMode);
+
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [isDarkMode]);
+
   return (
     <BrowserRouter>
       <Routes>

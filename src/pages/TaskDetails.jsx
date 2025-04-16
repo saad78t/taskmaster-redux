@@ -132,7 +132,7 @@ function TaskDetails() {
 
   if (error) {
     return (
-      <div className="p-6 max-w-2xl mx-auto">
+      <div className="p-6 max-w-2xl mx-auto text-white">
         <p className="text-red-600 text-lg font-semibold">❌ Error: {error}</p>
         <Button onClick={() => navigate(-1)} className="mt-4">
           🔙 Back
@@ -143,7 +143,7 @@ function TaskDetails() {
 
   if (!task) {
     return (
-      <div className="p-6 max-w-2xl mx-auto">
+      <div className="p-6 max-w-2xl mx-auto text-white">
         <p className="text-red-600 text-lg font-semibold">❌ Task not found.</p>
         <Button onClick={() => navigate(-1)} className="mt-4">
           🔙 Back
@@ -153,12 +153,12 @@ function TaskDetails() {
   }
 
   return (
-    <div className="p-6 max-w-2xl mx-auto bg-white shadow-lg rounded-2xl border border-blue-200 mt-6">
+    <div className="p-6 max-w-2xl mx-auto bg-gray-800 text-white shadow-lg rounded-2xl border border-blue-200 mt-6">
       <Button onClick={() => navigate(-1)} className="mb-6">
         🔙 Back to list
       </Button>
 
-      <h2 className="text-2xl font-bold text-blue-700 mb-4">
+      <h2 className="text-2xl font-bold text-blue-400 mb-4">
         📝 Edit Task: {task.taskName}
       </h2>
 
@@ -169,7 +169,7 @@ function TaskDetails() {
             type="text"
             value={taskName}
             onChange={(e) => setTaskName(e.target.value)}
-            className="w-full border p-2 rounded"
+            className="w-full border p-2 rounded bg-gray-700 text-white"
           />
           {errors.taskName && (
             <p className="text-red-600 text-sm mt-1">{errors.taskName}</p>
@@ -180,7 +180,7 @@ function TaskDetails() {
           <textarea
             value={taskDescription}
             onChange={(e) => setTaskDescription(e.target.value)}
-            className="w-full border p-2 rounded"
+            className="w-full border p-2 rounded bg-gray-700 text-white"
           />
           {errors.taskDescription && (
             <p className="text-red-600 text-sm mt-1">
@@ -193,7 +193,7 @@ function TaskDetails() {
           <SelectNumber
             value={numberSelection}
             onChange={(e) => setNumberSelection(e.target.value)}
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 focus:ring-blue-500 focus:border-blue-500"
+            className="bg-gray-700 border border-gray-600 text-white text-sm rounded-lg block w-full p-2.5 focus:ring-blue-500 focus:border-blue-500"
           />
         </div>
         <div>
@@ -201,7 +201,7 @@ function TaskDetails() {
           <SelectPriority
             value={prioritySelection}
             onChange={(e) => setPrioritySelection(e.target.value)}
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 focus:ring-blue-500 focus:border-blue-500"
+            className="bg-gray-700 border border-gray-600 text-white text-sm rounded-lg block w-full p-2.5 focus:ring-blue-500 focus:border-blue-500"
           />
           {errors.prioritySelection && (
             <p className="text-red-600 text-sm mt-1">
@@ -215,7 +215,7 @@ function TaskDetails() {
           <Classification
             value={classification}
             onChange={(e) => setClassification(e.target.value)}
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 focus:ring-blue-500 focus:border-blue-500"
+            className="bg-gray-700 border border-gray-600 text-white text-sm rounded-lg block w-full p-2.5 focus:ring-blue-500 focus:border-blue-500"
           />
           {errors.classification && (
             <p className="text-red-600 text-sm mt-1">{errors.classification}</p>
@@ -225,7 +225,7 @@ function TaskDetails() {
           <img src={task.imageUrl} alt="task" width={100} height={100} />
         </div>
         <div>
-          <label htmlFor="image-upload" className="btn">
+          <label htmlFor="image-upload" className="btn text-white">
             Change Image
           </label>
           <input
@@ -247,7 +247,6 @@ function TaskDetails() {
         </div>
         <div className="mt-6">
           <Button onClick={handleUpdateClick} disabled={isButtonDisabled}>
-            {/* {isUploading ? "Updating..." : "Save Changes"} */}
             {isButtonDisabled
               ? `Please wait ${countdown} seconds...`
               : "Update Task"}

@@ -80,14 +80,16 @@ function TaskList() {
   return (
     <section className="max-w-3xl mx-auto mt-6 px-4">
       {isLoading && (
-        <div className="bg-gray-50 shadow-md rounded-xl p-6">
-          <p className="text-center">Loading...</p>
+        <div className="bg-gray-50 dark:bg-gray-800 shadow-md rounded-xl p-6">
+          <p className="text-center text-gray-900 dark:text-gray-100">
+            Loading...
+          </p>
         </div>
       )}
 
       {!isLoading && hasFetchedOnce && tasks.length === 0 && (
-        <div className="bg-gray-50 shadow-md rounded-xl p-6">
-          <p className="text-gray-700 text-center text-lg font-medium mt-8 p-4 bg-yellow-50 border border-yellow-300 rounded shadow">
+        <div className="bg-gray-50 dark:bg-gray-800 shadow-md rounded-xl p-6">
+          <p className="text-gray-700 dark:text-gray-200 text-center text-lg font-medium mt-8 p-4 bg-yellow-50 dark:bg-yellow-900 border border-yellow-300 dark:border-yellow-700 rounded shadow">
             📋 No tasks yet. Start adding some!
           </p>
         </div>
@@ -100,7 +102,7 @@ function TaskList() {
             <Filter />
           </div>
 
-          <div className="bg-gray-50 shadow-md rounded-xl p-6">
+          <div className="bg-gray-50 dark:bg-gray-800 shadow-md rounded-xl p-6">
             <div className="space-y-4 transition-all duration-300">
               {displayTasks.map((task) => (
                 <TaskItem task={task} key={task.id} />

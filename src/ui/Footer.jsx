@@ -14,7 +14,7 @@ function Footer() {
       : 0;
 
   return (
-    <footer className="bg-gray-900 text-gray-300 py-6 mt-10 shadow-inner sticky bottom-0 w-full">
+    <footer className="bg-gray-900 text-gray-300 py-6 mt-10 shadow-inner sticky bottom-0 w-full dark:bg-gray-800">
       <div className="max-w-4xl mx-auto px-4 text-center space-y-2">
         <p className="text-sm">
           &copy; {new Date().getFullYear()}{" "}
@@ -23,7 +23,7 @@ function Footer() {
         </p>
 
         {tasks.length > 0 && (
-          <div className="text-sm text-gray-300">
+          <div className="text-sm text-gray-300 dark:text-gray-400">
             You have{" "}
             <span className="text-white font-semibold">{tasks.length}</span>{" "}
             tasks,{" "}

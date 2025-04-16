@@ -3,6 +3,9 @@ import { getTasks, updateTask } from "../services/apiTasks";
 import { updateTaskCompleted } from "../services/apiTasks";
 import { deleteTask } from "../services/apiTasks";
 
+const savedDarkMode = JSON.parse(localStorage.getItem("darkMode"));
+const initialDarkMode = savedDarkMode !== null ? savedDarkMode : false;
+
 const initialState = {
   numberSelection: 1,
   prioritySelection: "",
@@ -16,6 +19,7 @@ const initialState = {
   sortBy: "input",
   hasFetchedOnce: false,
   error: null,
+  isDarkMode: initialDarkMode,
 };
 
 // thunk to fetch tasks from Supabase and update Redux
@@ -165,6 +169,15 @@ const sliceOperations = createSlice({
         state.tasks[index] = updatedTask; // Update the task in the state
       }
     },
+    toggleDarkMode: (state) => {
+      state.isDarkMode = !state.isDarkMode;
+      localStorage.setItem("darkMode", JSON.stringify(state.isDarkMode));
+    },
+
+    setDarkMode: (state, action) => {
+      state.isDarkMode = action.payload;
+      localStorage.setItem("darkMode", JSON.stringify(action.payload));
+    },
   },
 });
 
@@ -187,6 +200,8 @@ export const {
   setError,
   clearError,
   updateTaskInState,
+  toggleDarkMode,
+  setDarkMode,
 } = sliceOperations.actions;
 
 export default sliceOperations.reducer;

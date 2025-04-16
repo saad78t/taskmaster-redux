@@ -2,10 +2,22 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+
+    <!-- ✅ أولاً: سكربت تهيئة الدارك مود -->
+    <script>
+      try {
+        const saved = JSON.parse(localStorage.getItem("darkMode"));
+        if (saved === true) {
+          document.documentElement.classList.add("dark");
+        }
+      } catch (e) {}
+    </script>
+
+    <!-- ✅ ثانياً: تحميل ستايلات Tailwind -->
     <link href="/src/index.css" rel="stylesheet" />
+
     <link rel="icon" type="image/svg+xml" href="/taskmaster.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
     <title>TaskMaster With Redux</title>
   </head>
   <body>

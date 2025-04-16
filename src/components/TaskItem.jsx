@@ -16,20 +16,22 @@ function TaskItem({ task }) {
   };
 
   return (
-    <div className="relative flex flex-col gap-3 p-4 bg-white rounded-2xl shadow-md border border-blue-100 transition hover:shadow-lg max-w-xl mx-auto">
+    <div className="relative flex flex-col gap-3 p-4 bg-white dark:bg-gray-800 rounded-2xl shadow-md border border-blue-100 dark:border-gray-600 transition hover:shadow-lg max-w-xl mx-auto">
       <Link to={`/task/${task.id}`}>
         {/* Task name */}
-        <h3 className="text-lg font-bold text-blue-700 flex items-center gap-2">
+        <h3 className="text-lg font-bold text-blue-700 dark:text-blue-400 flex items-center gap-2">
           📌 {task.taskName}
         </h3>
       </Link>
 
       {/* Task details */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-2 gap-x-8 text-sm text-gray-700">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-2 gap-x-8 text-sm text-gray-700 dark:text-gray-300">
         <p>🧮 Quantity: {task.numberSelection}</p>
         <p>
           📝 Description:{" "}
-          <span className="italic text-gray-600">{task.taskDescription}</span>
+          <span className="italic text-gray-600 dark:text-gray-400">
+            {task.taskDescription}
+          </span>
         </p>
         <p>
           ⏫ Priority:{" "}
@@ -53,13 +55,8 @@ function TaskItem({ task }) {
           <span className="text-purple-600">{task.classification}</span>
         </p>
       </div>
-      {/* {task.imageUrl && (
-        <img
-          src={task.imageUrl}
-          alt={task.taskName}
-          className="w-full max-w-xs rounded-xl border border-gray-300 mt-2"
-        />
-      )} */}
+
+      {/* Image */}
       {task.imageUrl ? (
         <img
           src={task.imageUrl}

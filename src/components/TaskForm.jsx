@@ -101,58 +101,87 @@ function TaskForm() {
   }
 
   return (
-    <div className="flex justify-center bg-gray-100 py-10">
+    <div className="flex justify-center bg-gray-100 dark:bg-gray-900 py-10">
       <form className="w-full max-w-full p-4" onSubmit={handleSubmit}>
-        <h2 className="text-2xl font-bold text-center mb-4">Create New Task</h2>
-        <SelectNumber
-          value={numberSelection}
-          onChange={(e) => dispatch(setNumberSelection(Number(e.target.value)))}
-        />
+        <h2 className="text-2xl font-bold text-center mb-4 text-gray-900 dark:text-white">
+          Create New Task
+        </h2>
 
-        <SelectPriority
-          value={prioritySelection}
-          onChange={(e) => dispatch(setPrioritySelection(e.target.value))}
-        />
-        {errors.prioritySelection && (
-          <p className="text-red-600 text-sm mt-1">
-            {errors.prioritySelection}
-          </p>
-        )}
-        <Classification
-          value={classification}
-          onChange={(e) => dispatch(setClassification(e.target.value))}
-        />
-        {errors.classification && (
-          <p className="text-red-600 text-sm mt-1">{errors.classification}</p>
-        )}
+        <div className="mb-4">
+          <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-200">
+            Number
+          </label>
+          <SelectNumber
+            value={numberSelection}
+            onChange={(e) =>
+              dispatch(setNumberSelection(Number(e.target.value)))
+            }
+            className="bg-white dark:bg-gray-700 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 w-full"
+          />
+        </div>
+
+        <div className="mb-4">
+          <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-200">
+            Priority
+          </label>
+          <SelectPriority
+            value={prioritySelection}
+            onChange={(e) => dispatch(setPrioritySelection(e.target.value))}
+            className="bg-white dark:bg-gray-700 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 w-full"
+          />
+          {errors.prioritySelection && (
+            <p className="text-red-600 text-sm mt-1">
+              {errors.prioritySelection}
+            </p>
+          )}
+        </div>
+
+        <div className="mb-4">
+          <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-200">
+            Classification
+          </label>
+          <Classification
+            value={classification}
+            onChange={(e) => dispatch(setClassification(e.target.value))}
+            className="bg-white dark:bg-gray-700 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 w-full"
+          />
+          {errors.classification && (
+            <p className="text-red-600 text-sm mt-1">{errors.classification}</p>
+          )}
+        </div>
+
         <input
           value={taskName}
           onChange={(e) => dispatch(setTaskName(e.target.value))}
-          className="w-full border border-gray-300 rounded-md p-2 placeholder:text-gray-500 placeholder:italic focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-md p-2 placeholder:text-gray-500 placeholder:italic focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4"
           placeholder="Enter task name..."
           type="text"
         />
         {errors.taskName && (
           <p className="text-red-600 text-sm mt-1">{errors.taskName}</p>
         )}
+
         <input
           value={taskDescription}
           onChange={(e) => dispatch(setTaskDescription(e.target.value))}
-          className="w-full border border-gray-300 rounded-md p-2 placeholder:text-gray-500 placeholder:italic focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-md p-2 placeholder:text-gray-500 placeholder:italic focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4"
           placeholder="Enter task description..."
           type="text"
         />
         {errors.taskDescription && (
           <p className="text-red-600 text-sm mt-1">{errors.taskDescription}</p>
         )}
-        <div>
-          <label className="block font-semibold">Upload Image</label>
+
+        <div className="mb-4">
+          <label className="block font-semibold text-gray-700 dark:text-gray-200">
+            Upload Image
+          </label>
           <input
             type="file"
             ref={fileInputRef}
             accept="image/*"
             onChange={(e) => setImageFile(e.target.files[0])}
-            className="mt-2"
+            className="mt-2 text-gray-900 dark:text-white"
           />
         </div>
 
