@@ -17,8 +17,10 @@ import supabase from "../services/supabase";
 import { useRef, useState } from "react";
 import { uploadImageToSupabase } from "../services/apiTasks";
 import toast from "react-hot-toast";
+import { getOrCreateUserId } from "../services/userId";
 
 function TaskForm() {
+  const userId = getOrCreateUserId();
   const { errors, validate } = useValidation();
   const taskName = useSelector((state) => state.operations?.taskName);
   const taskDescription = useSelector(
@@ -79,6 +81,7 @@ function TaskForm() {
           classification,
           completed,
           imageUrl,
+          userId,
         },
       ])
       .select();

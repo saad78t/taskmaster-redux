@@ -6,8 +6,10 @@ import Filter from "./Filter";
 import { useEffect, useMemo, useState } from "react";
 import { deleteAllTasks, fetchTasksFromSupabase } from "../redux/tasksSlice";
 import { deleteAllTask } from "../services/apiTasks";
+import { useParams } from "react-router-dom";
 
 function TaskList() {
+  const { userId } = useParams();
   const dispatch = useDispatch();
   //This line makes the TaskList component update automatically when a task is deleted or modified
   //This line is primarily responsible for linking the component to Redux.
@@ -17,13 +19,19 @@ function TaskList() {
 
   const [hasFetchedOnce, setHasFetchedOnce] = useState(false);
 
+  // useEffect(() => {
+  //   if (!hasFetchedOnce) {
+  //     dispatch(fetchTasksFromSupabase()).then(() => {
+  //       setHasFetchedOnce(true);
+  //     });
+  //   }
+  // }, [dispatch, hasFetchedOnce]);
   useEffect(() => {
-    if (!hasFetchedOnce) {
-      dispatch(fetchTasksFromSupabase()).then(() => {
-        setHasFetchedOnce(true);
-      });
+    if (userId && !hasFetchedOnce) {
+      dispatch(fetchTasksFromSupabase(userId));
+      setHasFetchedOnce(true);
     }
-  }, [dispatch, hasFetchedOnce]);
+  }, [dispatch, userId, hasFetchedOnce]);
 
   // const baseTasks = search ? searchResult : tasks;
 

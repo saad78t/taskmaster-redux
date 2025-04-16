@@ -19,10 +19,10 @@ const initialState = {
 };
 
 // thunk to fetch tasks from Supabase and update Redux
-export const fetchTasksFromSupabase = () => async (dispatch) => {
+export const fetchTasksFromSupabase = (userId) => async (dispatch) => {
   try {
     dispatch(setLoading(true));
-    const tasks = await getTasks(); // Fetch tasks from Supabase
+    const tasks = await getTasks(userId); // Fetch tasks from Supabase
     dispatch(setTasksFromSupabase(tasks)); // Update state
     dispatch(setHasFetchedOnce(true)); // appoint the flag after the fetch
   } catch (error) {

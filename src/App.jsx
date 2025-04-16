@@ -1,14 +1,18 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import TaskDetails from "./pages/TaskDetails";
 import AppLayout from "./layout/AppLayout";
 import { Toaster } from "react-hot-toast";
+import { getOrCreateUserId } from "./services/userId";
 function App() {
+  const userId = getOrCreateUserId();
+  console.log(userId);
   return (
     <BrowserRouter>
       <Routes>
         <Route element={<AppLayout />}>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Navigate to={`/${userId}`} replace />} />
+          <Route path="/:userId" element={<Home />} />
           <Route path="/task/:id" element={<TaskDetails />} />
         </Route>
       </Routes>
@@ -24,7 +28,7 @@ function App() {
             maxWidth: "500px",
             padding: "16px 24px",
             backgroundColor: "color-grey-500",
-            color: "var(--color-grey-700)",
+            color: "color-grey-700",
           },
         }}
       />

@@ -1,9 +1,10 @@
 import supabase from "./supabase";
 
-export async function getTasks() {
+export async function getTasks(userId) {
   let { data: tasks, error } = await supabase
     .from("tasks")
     .select("*")
+    .eq("userId", userId)
     .order("created_at", { ascending: true });
   if (error) {
     console.error(error);
