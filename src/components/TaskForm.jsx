@@ -57,7 +57,7 @@ function TaskForm() {
     if (!taskName || !taskDescription || !prioritySelection || !classification)
       return;
 
-    let imageUrl = "";
+    let imageUrl = null;
 
     if (imageFile) {
       try {
@@ -90,7 +90,7 @@ function TaskForm() {
     dispatch(addNewTask(data[0]));
     dispatch(resetForm());
     setImageFile(null);
-
+    //This is used to reset the file because the file does not reset after adding the task except in this way.
     if (fileInputRef.current) {
       fileInputRef.current.value = null;
     }

@@ -60,12 +60,12 @@ function TaskItem({ task }) {
           className="w-full max-w-xs rounded-xl border border-gray-300 mt-2"
         />
       )} */}
-      {task.imageUrl && task.imageUrl.trim() !== "" ? (
+      {task.imageUrl ? (
         <img
           src={task.imageUrl}
-          alt="picture"
+          alt="task"
           onError={(e) => {
-            e.target.onerror = null; // لمنع حلقة لانهائية في حال فشل تحميل الصورة الافتراضية
+            e.target.onerror = null;
             e.target.src = "/taskmaster.png";
           }}
           className="w-full max-w-xs rounded-xl border border-gray-300 mt-2"
@@ -73,7 +73,7 @@ function TaskItem({ task }) {
       ) : (
         <img
           src="/taskmaster.png"
-          alt="default picture"
+          alt="default"
           className="w-full max-w-xs rounded-xl border border-gray-300 mt-2"
         />
       )}
