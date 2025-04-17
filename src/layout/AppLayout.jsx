@@ -8,7 +8,7 @@ function AppLayout() {
     <div className="flex flex-col min-h-screen w-full">
       <Header />
       <DraggableButton />
-      <main className="flex-1 p-4 w-full max-w-full bg-white dark:bg-gray-800 text-black dark:text-white transition-all duration-300">
+      <main className="flex-1 p-4 w-full bg-white dark:bg-gray-800 text-black dark:text-white transition-all duration-300">
         <Outlet />
       </main>
       <Footer />

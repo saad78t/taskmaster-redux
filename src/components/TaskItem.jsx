@@ -3,10 +3,11 @@ import { useDispatch } from "react-redux";
 import { deleteTaskThunk, toggleTaskCompletedThunk } from "../redux/tasksSlice";
 import Button from "../ui/Button";
 import { Trash2 } from "lucide-react";
+import { useState } from "react";
 
 function TaskItem({ task }) {
   const dispatch = useDispatch();
-
+  const [isReading, setIsReading] = useState(false);
   const handleToggle = () => {
     dispatch(toggleTaskCompletedThunk(task.id, !task.completed));
   };
@@ -15,6 +16,12 @@ function TaskItem({ task }) {
     dispatch(deleteTaskThunk(task.id, task.imageUrl));
   };
 
+  function handleReadMore() {
+    setIsReading((status) => !status);
+  }
+  const taskDescription = isReading
+    ? task.taskDescription
+    : `${task.taskDescription.slice(0, 5)}`;
   return (
     <div className="relative flex flex-col gap-3 p-4 bg-white dark:bg-gray-800 rounded-2xl shadow-md border border-blue-100 dark:border-gray-600 transition hover:shadow-lg max-w-xl mx-auto">
       <Link to={`/task/${task.id}`}>
@@ -30,8 +37,14 @@ function TaskItem({ task }) {
         <p>
           📝 Description:{" "}
           <span className="italic text-gray-600 dark:text-gray-400">
-            {task.taskDescription}
+            {taskDescription}
           </span>
+          <button
+            className="text-blue-700 font-bold  dark:text-yellow-200"
+            onClick={handleReadMore}
+          >
+            read more
+          </button>
         </p>
         <p>
           ⏫ Priority:{" "}

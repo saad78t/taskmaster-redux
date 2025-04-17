@@ -92,6 +92,7 @@ function DraggableButton() {
     <button
       style={{
         position: "absolute",
+        zIndex: 9999,
         left: `${position.x}px`,
         top: `${position.y}px`,
         padding: "12px 20px",
