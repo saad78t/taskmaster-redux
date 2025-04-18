@@ -7,7 +7,9 @@ import { useState } from "react";
 
 function TaskItem({ task }) {
   const dispatch = useDispatch();
-  const [isReading, setIsReading] = useState(false);
+  const [isTextExpanded, setIsTextExpanded] = useState(false);
+  const [isButtonVisible, setIsButtonVisible] = useState(true); // Control whether to show/hide the button
+
   const handleToggle = () => {
     dispatch(toggleTaskCompletedThunk(task.id, !task.completed));
   };
@@ -17,11 +19,20 @@ function TaskItem({ task }) {
   };
 
   function handleReadMore() {
-    setIsReading((status) => !status);
+    setIsTextExpanded((status) => !status);
+    setIsButtonVisible(false);
   }
-  const taskDescription = isReading
+
+  //Handle clicks on the message body
+  //Handle clicks on the message body
+  const handleMessageClick = () => {
+    setIsButtonVisible(true); // Re-show the button when the message is clicked
+    setIsTextExpanded(false);
+  };
+
+  const taskDescription = isTextExpanded
     ? task.taskDescription
-    : `${task.taskDescription.slice(0, 5)}`;
+    : `${task.taskDescription.slice(0, 5)}...`;
   return (
     <div className="relative flex flex-col gap-3 p-4 bg-white dark:bg-gray-800 rounded-2xl shadow-md border border-blue-100 dark:border-gray-600 transition hover:shadow-lg max-w-xl mx-auto">
       <Link to={`/task/${task.id}`}>
@@ -36,15 +47,20 @@ function TaskItem({ task }) {
         <p>🧮 Quantity: {task.numberSelection}</p>
         <p>
           📝 Description:{" "}
-          <span className="italic text-gray-600 dark:text-gray-400">
+          <span
+            onClick={handleMessageClick}
+            className="italic text-gray-600 dark:text-gray-400"
+          >
             {taskDescription}
           </span>
-          <button
-            className="text-blue-700 font-bold  dark:text-yellow-200"
-            onClick={handleReadMore}
-          >
-            read more
-          </button>
+          {isButtonVisible && (
+            <button
+              className="text-blue-700 font-bold  dark:text-yellow-200"
+              onClick={handleReadMore}
+            >
+              {isTextExpanded ? "" : "read more"}
+            </button>
+          )}
         </p>
         <p>
           ⏫ Priority:{" "}
