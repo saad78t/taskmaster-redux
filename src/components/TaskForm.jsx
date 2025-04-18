@@ -199,7 +199,7 @@ function TaskForm() {
             type="submit"
             className="w-full bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-md"
           >
-            Add Task
+            {isAdding ? "Adding..." : "Add Task"}
           </Button>
         </form>
       </div>
