@@ -23,8 +23,8 @@ function App() {
   }, [isDarkMode]);
 
   return (
-    // <BrowserRouter basename="/taskmaster-redux">
-    <BrowserRouter>
+    // <BrowserRouter>
+    <BrowserRouter basename="/taskmaster-redux">
       <Routes>
         <Route element={<AppLayout />}>
           <Route path="/" element={<Navigate to={`/${userId}`} replace />} />
