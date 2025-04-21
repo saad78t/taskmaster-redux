@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "homepage": "https://saad78t.github.io/taskmaster-redux",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
