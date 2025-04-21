@@ -360,11 +360,11 @@ function TaskForm() {
           </div>
         </div>
 
-        {/* السطر الثاني */}
-        <div className="grid grid-cols-12 gap-4 items-center">
+        {/* السطر الثاني - الزر والصورة بنص الفورم */}
+        <div className="flex justify-center items-center gap-6 mt-6 flex-wrap">
           {/* Upload Image */}
-          <div className="col-span-6">
-            <label className="block font-medium text-sm text-gray-700 dark:text-gray-200">
+          <div className="flex flex-col items-start">
+            <label className="block font-medium text-sm text-gray-700 dark:text-gray-200 mb-1">
               Upload Image
             </label>
             <input
@@ -372,12 +372,12 @@ function TaskForm() {
               ref={fileInputRef}
               accept="image/*"
               onChange={(e) => setImageFile(e.target.files[0])}
-              className="mt-2 file:px-1 file:bg-blue-500 file:rounded-lg file:text-white text-gray-900 dark:text-white dark:file:bg-gray-600 w-full"
+              className="block file:px-3 file:py-1.5 file:bg-blue-500 file:rounded-lg file:text-white text-gray-900 dark:text-white dark:file:bg-gray-600"
             />
           </div>
 
           {/* Submit Button */}
-          <div className="col-span-6 text-right">
+          <div>
             <Button
               type="submit"
               className="bg-blue-500 hover:bg-blue-600 text-white p-3 rounded-md"
