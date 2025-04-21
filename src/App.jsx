@@ -23,7 +23,7 @@ function App() {
   }, [isDarkMode]);
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/">
       <Routes>
         <Route element={<AppLayout />}>
           <Route path="/" element={<Navigate to={`/${userId}`} replace />} />
