@@ -36,7 +36,7 @@ function TaskItem({ task }) {
   return (
     <div className="relative p-5 bg-white dark:bg-gray-800 rounded-2xl shadow-md border border-blue-100 dark:border-gray-600 transition hover:shadow-lg max-w-4xl mx-auto">
       {/* Task Name */}
-      <Link to={`/task/${task.id}`}>
+      <Link to={`/task/${task.userId}/${task.id}`}>
         <h3 className="text-xl font-bold text-blue-700 dark:text-blue-400 flex items-center gap-2 mb-3">
           📌 {task.taskName}
         </h3>

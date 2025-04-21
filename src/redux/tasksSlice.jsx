@@ -2,7 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 import { getTasks, updateTask } from "../services/apiTasks";
 import { updateTaskCompleted } from "../services/apiTasks";
 import { deleteTask } from "../services/apiTasks";
-
 const savedDarkMode = JSON.parse(localStorage.getItem("darkMode"));
 const initialDarkMode = savedDarkMode !== null ? savedDarkMode : false;
 

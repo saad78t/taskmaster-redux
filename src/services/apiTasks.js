@@ -67,7 +67,9 @@ export async function deleteTask(id, imageUrl = null) {
   }
 }
 
-/* export async function deleteAllTask() {
+/* 
+//This code was deleting all tasks without specifying the user
+export async function deleteAllTask() {
   const { error } = await supabase.from("tasks").delete().gt("id", 0); // Delete all tasks with id greater than 0
 
   if (error) {
@@ -78,7 +80,7 @@ export async function deleteTask(id, imageUrl = null) {
   }
 } */
 
-export async function deleteAllTask() {
+/* export async function deleteAllTask() {
   // 1. Retrieve all tasks first
   // 1. استرجاع جميع المهام أولاً
   const { data: tasks, error: fetchError } = await supabase
@@ -112,6 +114,49 @@ export async function deleteAllTask() {
 
   // 3. Delete all tasks from the Supabase table
   const { error } = await supabase.from("tasks").delete().gt("id", 0);
+
+  if (error) {
+    console.error("❌ Error deleting all tasks:", error.message);
+    throw new Error("Tasks could not be deleted");
+  } else {
+    console.log("✅ All tasks deleted successfully.");
+  }
+} */
+
+export async function deleteAllTask(userId) {
+  // 1. Recover tasks for this user only
+  const { data: tasks, error: fetchError } = await supabase
+    .from("tasks")
+    .select("imageUrl")
+    .eq("userId", userId); // We define only special tasks
+
+  if (fetchError) {
+    console.error("❌ Error fetching tasks:", fetchError.message);
+    throw new Error("Failed to fetch tasks before deletion.");
+  }
+
+  // 2. Delete linked images
+  const picturesBucket = supabase.storage.from("pictures");
+
+  const imageUrls = tasks
+    .map((task) => task.imageUrl)
+    .filter(Boolean)
+    .map((url) => url.split("/storage/v1/object/public/pictures/")[1]);
+
+  if (imageUrls.length > 0) {
+    const { error: deleteImagesError } = await picturesBucket.remove(imageUrls);
+    if (deleteImagesError) {
+      console.error(
+        "❌ Failed to delete some or all images:",
+        deleteImagesError.message
+      );
+    } else {
+      console.log("🗑️ All related images deleted successfully.");
+    }
+  }
+
+  // 3. Delete tasks for the user only
+  const { error } = await supabase.from("tasks").delete().eq("userId", userId); //Here we specify who we want to delete
 
   if (error) {
     console.error("❌ Error deleting all tasks:", error.message);
@@ -166,7 +211,7 @@ export const updateTask = async (updatedTask) => {
   return data;
 };
 
-export async function uploadImageToSupabase(file, oldImageUrl = null) {
+export async function uploadImageToSupabase(userId, file, oldImageUrl = null) {
   const picturesBucket = supabase.storage.from("pictures");
 
   // Extract the old image path from the URL, if any.
@@ -188,7 +233,7 @@ export async function uploadImageToSupabase(file, oldImageUrl = null) {
   //It is responsible for fetching the final image link (which you can use in your interface or store in the database), after the image has been uploaded.
   const fileExt = file.name.split(".").pop();
   const fileName = `${Date.now()}.${fileExt}`; //This specifies the package (main folder) that contains the images which is "pictures".
-  const filePath = `tasks/${fileName}`; //This function asks Supabase for a public URL to the image whose path is filePath.
+  const filePath = `tasks/${userId}/${fileName}`; //This function asks Supabase for a public URL to the image whose path is filePath.
 
   const { error: uploadError } = await picturesBucket.upload(filePath, file);
   if (uploadError) {

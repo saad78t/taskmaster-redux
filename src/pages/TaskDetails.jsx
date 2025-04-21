@@ -12,7 +12,7 @@ import { uploadImageToSupabase } from "../services/apiTasks";
 import toast from "react-hot-toast";
 
 function TaskDetails() {
-  const { id } = useParams();
+  const { userId, id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { tasks, hasFetchedOnce, isLoading, error } = useSelector(
@@ -84,7 +84,11 @@ function TaskDetails() {
 
     if (imageFile && imageFile.name !== task?.imageName) {
       try {
-        imageUrl = await uploadImageToSupabase(imageFile, task?.imageUrl);
+        imageUrl = await uploadImageToSupabase(
+          userId,
+          imageFile,
+          task?.imageUrl
+        );
         console.log("✅ New image uploaded:", imageUrl);
       } catch (err) {
         toast.error("❌ Image upload failed:", err);
