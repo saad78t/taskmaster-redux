@@ -8,7 +8,9 @@ import react from "@vitejs/plugin-react";
 //   base: "/taskmaster-redux/",
 // });
 
-export default defineConfig(({ mode }) => ({
-  base: mode === "production" ? "/taskmaster-redux/" : "/",
-  plugins: [react(), tailwindcss()],
-}));
+export default defineConfig(({ mode }) => {
+  return {
+    base: mode === "production" ? "/taskmaster-redux/" : "/",
+    plugins: [react(), tailwindcss()],
+  };
+});
