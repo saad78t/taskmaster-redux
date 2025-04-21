@@ -3,7 +3,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main # تفعيل البايبلاين عند كل push للفرع الرئيسي
+      - main
 
 jobs:
   build-and-deploy:
@@ -21,13 +21,16 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Set correct base path
+        run: echo "BASE_PATH=/taskmaster-redux/" >> $GITHUB_ENV
+
       - name: Build project
         run: |
-          npm run build
-          cp dist/index.html dist/404.html  # نسخ index.html إلى 404.html لتجنب الأخطاء
+          npm run build -- --base=$BASE_PATH
+          cp dist/index.html dist/404.html
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist # تأكد من أن مسار dist صحيح
+          publish_dir: ./dist
