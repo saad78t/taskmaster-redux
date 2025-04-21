@@ -27,8 +27,11 @@ function App() {
       <Routes>
         <Route element={<AppLayout />}>
           <Route path="/" element={<Navigate to={`/${userId}`} replace />} />
-          <Route path="/:userId" element={<Home />} />
-          <Route path="/task/:userId/:id" element={<TaskDetails />} />
+          <Route path="/taskmaster-redux/:userId" element={<Home />} />
+          <Route
+            path="/taskmaster-redux/task/:userId/:id"
+            element={<TaskDetails />}
+          />
         </Route>
       </Routes>
       <Toaster
