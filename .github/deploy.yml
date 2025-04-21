@@ -3,7 +3,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main
+      - main # تفعيل البايبلاين عند كل push للفرع الرئيسي
 
 jobs:
   build-and-deploy:
@@ -24,10 +24,10 @@ jobs:
       - name: Build project
         run: |
           npm run build
-          cp dist/index.html dist/404.html
+          cp dist/index.html dist/404.html  # نسخ index.html إلى 404.html لتجنب الأخطاء
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
+          publish_dir: ./dist # تأكد من أن مسار dist صحيح
