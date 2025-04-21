@@ -42,7 +42,7 @@ jobs:
       - name: Upload built site
         uses: actions/upload-pages-artifact@v2
         with:
-          path: ./dist # Change it if the build output goes to another folder.
+          path: ../../disit # Change it if the build output goes to another folder.
 
       - name: Deploy to GitHub Pages
         id: deployment
