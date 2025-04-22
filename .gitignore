@@ -10,7 +10,6 @@ lerna-debug.log*
 node_modules
 own-notifications
 supabase.js
-dist-ssr
 *.local
 
 # Editor directories and files
