@@ -10,6 +10,7 @@ lerna-debug.log*
 node_modules
 own-notifications
 supabase.js
+index.html
 dist-ssr
 *.local
 
