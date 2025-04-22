@@ -22,7 +22,6 @@ jobs:
         run: npm install
 
       - name: Set correct base path
-        run: echo "BASE_PATH=/taskmaster-redux/" >> $GITHUB_ENV
 
       - name: Build project
         run: |
