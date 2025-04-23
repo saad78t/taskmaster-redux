@@ -96,12 +96,12 @@ function TaskItem({ task }) {
         {/* Image with smooth zoom */}
         <div className="relative flex justify-center items-start mt-2">
           <img
-            src={task.imageUrl || "/taskmaster.png"}
+            src={task.imageUrl || "./taskmaster.png"}
             alt="task"
             onClick={() => setIsZoomed(!isZoomed)}
             onError={(e) => {
               e.target.onerror = null;
-              e.target.src = "/taskmaster.png";
+              e.target.src = "./taskmaster.png";
             }}
             className={`rounded-xl border border-gray-300 cursor-pointer transition-transform duration-300 ${
               isZoomed ? "scale-150 shadow-2xl z-10" : "scale-100"
