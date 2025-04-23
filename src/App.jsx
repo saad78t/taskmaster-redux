@@ -21,9 +21,8 @@ function App() {
       document.documentElement.classList.remove("dark");
     }
   }, [isDarkMode]);
-
   return (
-    // <BrowserRouter>
+    // <BrowserRouter>test
     <BrowserRouter basename="/taskmaster-redux">
       <Routes>
         <Route element={<AppLayout />}>
