@@ -21,12 +21,14 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Inject env variables from secrets
+        run: |
+          echo "VITE_SUPABASE_URL=${{ secrets.VITE_SUPABASE_URL }}" >> .env
+          echo "VITE_SUPABASE_KEY=${{ secrets.VITE_SUPABASE_KEY }}" >> .env
+
       - name: Build project
         run: |
           npm run build
-
-      - name: Copy index.html as 404.html
-        run: |
           cp dist/index.html dist/404.html
 
       - name: Deploy to GitHub Pages
