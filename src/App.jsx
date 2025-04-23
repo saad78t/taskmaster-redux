@@ -23,7 +23,7 @@ function App() {
   }, [isDarkMode]);
 
   return (
-    // <BrowserRouter>
+    // <BrowserRouter>test
     <BrowserRouter basename="/taskmaster-redux">
       <Routes>
         <Route element={<AppLayout />}>
