@@ -14,12 +14,6 @@ function App() {
 
   const isDarkMode = useSelector((state) => state.operations.isDarkMode);
 
-  const redirect = sessionStorage.redirect;
-  if (redirect) {
-    sessionStorage.removeItem("redirect");
-    window.history.replaceState(null, "", redirect);
-  }
-
   useEffect(() => {
     if (isDarkMode) {
       document.documentElement.classList.add("dark");
