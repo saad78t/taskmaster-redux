@@ -3,30 +3,31 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main # تأكد أن الفرع الذي تستخدمه هو "main" وليس "master" أو أي فرع آخر
+      - main
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+      - name: Checkout source code
+        uses: actions/checkout@v3
 
       - name: Setup Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
-          node-version: "16" # أو أي إصدار تريده
+          node-version: 18
 
       - name: Install dependencies
         run: npm install
 
       - name: Build project
-        run: npm run build # بناء التطبيق
+        run: |
+          npm run build
+          cp dist/index.html dist/404.html
 
       - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          branch: gh-pages # الفرع الذي سينشر عليه
-          folder: dist # المجلد الذي يحتوي على الملفات المبنية
-          token: ${{ secrets.GITHUB_TOKEN }} # هذا يُستخدم للوصول إلى GitHub Pages
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
