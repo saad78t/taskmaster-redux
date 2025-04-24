@@ -181,7 +181,7 @@ function TaskList() {
       {localTasks.length > 0 && (
         <div className="p-4 border-t border-gray-300 dark:border-gray-700">
           <h2 className="text-xl font-bold mb-4 text-gray-800 dark:text-white">
-            Offline Tasks (من المتصفح)
+            Offline Tasks
           </h2>
 
           {localTasks.length === 0 ? (
