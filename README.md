@@ -56,54 +56,56 @@ E2E tests are written using Robot Framework and SeleniumLibrary, and are execute
 
 ## 📁 Project Structure
 
+```
 taskmaster-redux/
 ├── .github/
-│ └── workflows/
-│ └── deploy.yml
+│   └── workflows/
+│       └── deploy.yml
 ├── public/
-│ └── vite.svg
+│   └── vite.svg
 ├── src/
-│ ├── App.jsx
-│ ├── index.css
-│ ├── main.jsx
-│ ├── components/
-│ │ ├── Classification.jsx
-│ │ ├── Filter.jsx
-│ │ ├── Search.jsx
-│ │ ├── SelectNumber.jsx
-│ │ ├── SelectPriority.jsx
-│ │ ├── TaskForm.jsx
-│ │ ├── TaskItem.jsx
-│ │ ├── TaskList.jsx
-│ │ └── indexedDBtasks/
-│ │ └── SyncOfflineTasks.jsx
-│ ├── db/
-│ │ └── indexedDB.js
-│ ├── hooks/
-│ │ ├── useInitDarkMode.js
-│ │ └── useValidation.js
-│ ├── layout/
-│ │ └── AppLayout.jsx
-│ ├── pages/
-│ │ ├── Home.jsx
-│ │ └── TaskDetails.jsx
-│ ├── redux/
-│ │ ├── store.jsx
-│ │ └── tasksSlice.jsx
-│ ├── services/
-│ │ ├── apiTasks.js
-│ │ ├── supabase.js
-│ │ ├── syncOfflineTasks.js
-│ │ ├── taskUtils.js
-│ │ └── userId.js
-│ └── ui/
-│ ├── Button.jsx
-│ ├── DarkModeToggle.jsx
-│ ├── Footer.jsx
-│ └── Header.jsx
+│   ├── App.jsx
+│   ├── index.css
+│   ├── main.jsx
+│   ├── components/
+│   │   ├── Classification.jsx
+│   │   ├── Filter.jsx
+│   │   ├── Search.jsx
+│   │   ├── SelectNumber.jsx
+│   │   ├── SelectPriority.jsx
+│   │   ├── TaskForm.jsx
+│   │   ├── TaskItem.jsx
+│   │   ├── TaskList.jsx
+│   │   └── indexedDBtasks/
+│   │       └── SyncOfflineTasks.jsx
+│   ├── db/
+│   │   └── indexedDB.js
+│   ├── hooks/
+│   │   ├── useInitDarkMode.js
+│   │   └── useValidation.js
+│   ├── layout/
+│   │   └── AppLayout.jsx
+│   ├── pages/
+│   │   ├── Home.jsx
+│   │   └── TaskDetails.jsx
+│   ├── redux/
+│   │   ├── store.jsx
+│   │   └── tasksSlice.jsx
+│   ├── services/
+│   │   ├── apiTasks.js
+│   │   ├── supabase.js
+│   │   ├── syncOfflineTasks.js
+│   │   ├── taskUtils.js
+│   │   └── userId.js
+│   └── ui/
+│       ├── Button.jsx
+│       ├── DarkModeToggle.jsx
+│       ├── Footer.jsx
+│       └── Header.jsx
 ├── tests/
-│ └── production.robot
+│   └── production.robot
 ├── README.md
+```
 
 ---
 
