@@ -185,7 +185,7 @@ npm run dev
 
 Make sure to never expose your keys publicly, and use GitHub secrets when deploying the app.
 
----
+
 
 ### 🔁 Supabase Storage
 
