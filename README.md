@@ -1,5 +1,11 @@
 # TaskMaster + Redux
 
+### 📝 About the App
+
+**TaskMaster + Redux** is a feature-rich task management application built with **React**, powered by **Redux Toolkit** for state management and **Supabase** for backend storage. The app is designed to demonstrate advanced front-end engineering practices using reusable components, custom hooks, and full CI/CD deployment pipelines.
+
+Whether you're managing personal tasks, collaborating on projects, or just exploring how to integrate modern front-end tools and DevOps practices, this app provides a clean, performant, and scalable starting point.
+
 TaskMaster is a feature-rich React + Redux app built with Supabase and a strong focus on mastering modern frontend development practices.
 
 ## 🚀 Features
