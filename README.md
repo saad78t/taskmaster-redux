@@ -4,19 +4,19 @@ TaskMaster is a feature-rich React + Redux app built with Supabase and a strong 
 
 ## 🚀 Features
 
-✅ Add tasks with title, description, and priority.
-✅ Edit tasks anytime.
-✅ Delete a single task or all tasks.
-✅ Mark tasks as complete/incomplete.
-✅ Categorize tasks (e.g., Work, Personal, Learning).
-✅ Search tasks by title.
-✅ Sort tasks (by input order, alphabetically, or completion).
-✅ Save tasks to Supabase linked to user account.
-✅ Share task list with a public link.
-✅ Dark mode toggle with draggable button.  
-✅ Dark mode adapts to both user preference and system settings.
-✅ Toast notifications (create, update, offline status).
-✅ Offline support using IndexedDB.
+- ✅ Add tasks with title, description, and priority.
+- ✅ Edit tasks anytime.
+- ✅ Delete a single task or all tasks.
+- ✅ Mark tasks as complete/incomplete.
+- ✅ Categorize tasks (e.g., Work, Personal, Learning).
+- ✅ Search tasks by title.
+- ✅ Sort tasks (by input order, alphabetically, or completion).
+- ✅ Save tasks to Supabase linked to user account.
+- ✅ Share task list with a public link.
+- ✅ Dark mode toggle with draggable button.
+- ✅ Dark mode adapts to both user preference and system settings.
+- ✅ Toast notifications (create, update, offline status).
+- ✅ Offline support using IndexedDB.
 
 > This app is for educational purposes — to explore and master advanced React, Redux, and full development workflows.
 
