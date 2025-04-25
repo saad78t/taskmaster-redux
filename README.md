@@ -185,7 +185,7 @@ npm run dev
 
 Make sure to never expose your keys publicly, and use GitHub secrets when deploying the app.
 
-
+```
 
 ### 🔁 Supabase Storage
 
@@ -195,4 +195,7 @@ _A screenshot of the storage interface inside Supabase, showing how images are s
 ---
 
 Made with ❤️ by [Saad](https://github.com/saad78t) as part of a learning journey into advanced React and full-stack development.
+
+```
+
 ```
