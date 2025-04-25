@@ -195,7 +195,3 @@ _A screenshot of the storage interface inside Supabase, showing how images are s
 ---
 
 Made with ❤️ by [Saad](https://github.com/saad78t) as part of a learning journey into advanced React and full-stack development.
-
-```
-
-```
