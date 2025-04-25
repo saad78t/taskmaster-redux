@@ -4,18 +4,19 @@ TaskMaster is a feature-rich React + Redux app built with Supabase and a strong 
 
 ## 🚀 Features
 
-- ✅ Add tasks with title, description, and priority.
-- ✅ Edit tasks anytime.
-- ✅ Delete a single task or all tasks.
-- ✅ Mark tasks as complete/incomplete.
-- ✅ Categorize tasks (e.g., Work, Personal, Learning).
-- ✅ Search tasks by title.
-- ✅ Sort tasks (by input order, alphabetically, or completion).
-- ✅ Save tasks to Supabase linked to user account.
-- ✅ Share task list with a public link.
-- ✅ Dark mode toggle with draggable button.
-- ✅ Toast notifications (create, update, offline status).
-- ✅ Offline support using IndexedDB.
+✅ Add tasks with title, description, and priority.
+✅ Edit tasks anytime.
+✅ Delete a single task or all tasks.
+✅ Mark tasks as complete/incomplete.
+✅ Categorize tasks (e.g., Work, Personal, Learning).
+✅ Search tasks by title.
+✅ Sort tasks (by input order, alphabetically, or completion).
+✅ Save tasks to Supabase linked to user account.
+✅ Share task list with a public link.
+✅ Dark mode toggle with draggable button.  
+✅ Dark mode adapts to both user preference and system settings.
+✅ Toast notifications (create, update, offline status).
+✅ Offline support using IndexedDB.
 
 > This app is for educational purposes — to explore and master advanced React, Redux, and full development workflows.
 
@@ -41,8 +42,13 @@ TaskMaster is a feature-rich React + Redux app built with Supabase and a strong 
 
 ## ⚙️ CI/CD Workflow
 
-1. Build & deploy to GitHub Pages.
-2. Automatically run end-to-end tests using Robot Framework.
+This project uses a CI/CD pipeline via GitHub Actions consisting of two stages:
+
+1. **Build and Deploy Stage:**  
+   On every push to the `main` branch, the app is built and deployed to GitHub Pages using `peaceiris/actions-gh-pages`.
+
+2. **Automated Testing Stage:**  
+   End-to-end tests are run using Robot Framework with SeleniumLibrary across **Chrome**, **Firefox**, and **Edge** browsers, ensuring high compatibility.
 
 🔗 [CI/CD Pipeline Run](https://github.com/saad78t/taskmaster-redux/actions/runs/14635181578)
 
@@ -160,11 +166,33 @@ _A screenshot showing the task editing page. After clicking on a task name, a ne
 
 ---
 
+### 🧩 Supabase Integration Setup
+
+This project uses [Supabase](https://supabase.com) to persist task data per user. To connect this app to your own Supabase instance:
+
+1. Go to [Supabase](https://supabase.com) and create a new project.
+2. In your Supabase dashboard, locate your:
+   - **Project URL**
+   - **Anon Public Key**
+3. Create a `.env` file in the root directory of your project with the following:
+
+```env
+VITE_SUPABASE_URL=your_supabase_url
+VITE_SUPABASE_KEY=your_supabase_anon_key
+
+npm install
+npm run dev
+
+Make sure to never expose your keys publicly, and use GitHub secrets when deploying the app.
+
+---
+
 ### 🔁 Supabase Storage
 
-![screenshot8](screenshoots/screenshot8.png)  
+![screenshot8](screenshoots/screenshot8.png)
 _A screenshot of the storage interface inside Supabase, showing how images are stored under the user's name._
 
 ---
 
 Made with ❤️ by [Saad](https://github.com/saad78t) as part of a learning journey into advanced React and full-stack development.
+```
