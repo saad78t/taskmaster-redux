@@ -68,7 +68,7 @@ Test Firefox
     [Teardown]    Close All Browsers
 
 Test Edge
-    Open Browser    ${URL}     Edge    options=add_argument("--no-user-data-dir")
+    Open Browser    ${URL}     Edge    options=add_argument("--no-sandbox")
     Maximize Browser Window
     Title Should Be  TaskMaster With Redux
     Wait Until Element Is Visible    //button[contains(., "Add Task")]    timeout=10s
