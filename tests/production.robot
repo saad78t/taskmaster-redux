@@ -29,9 +29,8 @@ Test Firefox
     Wait Until Page Contains    Task to Edit    timeout=5s
 
     # Update Task
-    Wait Until Element Is Visible    //div[2]/div[1]/div[1]/a/h3    timeout=6s
-    Scroll Element Into View         //div[2]/div[1]/div[1]/a/h3
-    Sleep    0.5s
+    Execute JavaScript    window.scrollTo(0, document.body.scrollHeight)
+    Sleep    1s
     Click Element                    //div[2]/div[1]/div[1]/a/h3
     Wait Until Page Contains    Edit Task
     Input Text      //div/div/div[1]/input     ${empty}     Edited
