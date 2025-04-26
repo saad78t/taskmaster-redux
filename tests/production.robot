@@ -2,10 +2,12 @@
 Library    SeleniumLibrary
 Suite Teardown  Close Browser
 
+*** Variables ***
+${URL}             https://saad78t.github.io/taskmaster-redux/
 
 *** Test Cases ***
 Test Chrome
-    Open Browser    https://saad78t.github.io/taskmaster-redux/   Chrome  options=add_argument("--headless"); 
+    Open Browser    ${URL}   Chrome  options=add_argument("--headless"); 
     Maximize Browser Window
     Title Should Be  TaskMaster With Redux
     Wait Until Element Is Visible    //button[contains(., "Add Task")]    timeout=10s
@@ -34,7 +36,7 @@ Test Chrome
     [Teardown]    Close All Browsers
 
 Test Firefox
-    Open Browser    https://saad78t.github.io/taskmaster-redux/    Firefox     options=add_argument("--headless")
+    Open Browser    ${URL}    Firefox     options=add_argument("--headless")
     Maximize Browser Window
     Title Should Be  TaskMaster With Redux
     Wait Until Element Is Visible    //button[contains(., "Add Task")]    timeout=10s
@@ -64,7 +66,7 @@ Test Firefox
     [Teardown]    Close All Browsers
 
 Test Edge
-    Open Browser    https://saad78t.github.io/taskmaster-redux/     Edge
+    Open Browser    ${URL}     browser=edge    options=add_argument("--no-user-data-dir")
     Maximize Browser Window
     Title Should Be  TaskMaster With Redux
     Wait Until Element Is Visible    //button[contains(., "Add Task")]    timeout=10s
