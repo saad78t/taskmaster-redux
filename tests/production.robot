@@ -29,7 +29,7 @@ Test Firefox
     Wait Until Page Contains    Task to Edit    timeout=5s
 
     # Update Task
-    Scroll Element Into View    xpath=//button[contains(text(), 'read more')]
+    Scroll Element Into View    //button[contains(text(), 'read more')]    timeout=10s
     Sleep    0.5s
     Click Element    //div[2]/div[1]/div[1]/a/h3
     Wait Until Page Contains    Edit Task
