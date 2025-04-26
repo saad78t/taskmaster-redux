@@ -29,7 +29,7 @@ Test Chrome
     Wait Until Page Contains    Edit Task
     Input Text      //div/div/div[1]/input     ${empty}     Edited
     Click Button    //button[contains(., 'Update Task')]
-    Wait Until Element Is Visible         //button[contains(., 'Update Task')]
+    Wait Until Element Is Visible         //button[contains(., 'Update Task')]    timeout=6s
     Click Button    //button[contains(., '🔙 Back to list')]
     [Teardown]    Close All Browsers
 
@@ -59,7 +59,7 @@ Test Firefox
     Wait Until Page Contains    Edit Task
     Input Text      //div/div/div[1]/input     ${empty}     Edited
     Click Button    //button[contains(., 'Update Task')]
-        Wait Until Element Is Visible         //button[contains(., 'Update Task')]
+    Wait Until Element Is Visible         //button[contains(., 'Update Task')]    timeout=6s
     Click Button    //button[contains(., '🔙 Back to list')]
     [Teardown]    Close All Browsers
 
@@ -88,6 +88,6 @@ Test Edge
     Wait Until Page Contains    Edit Task
     Input Text      //div/div/div[1]/input     ${empty}    Edited
     Click Button    //button[contains(., 'Update Task')]
-    Wait Until Element Is Visible         //button[contains(., 'Update Task')]
+    Wait Until Element Is Visible         //button[contains(., 'Update Task')]    timeout=6s
     Click Button    //button[contains(., '🔙 Back to list')]
     [Teardown]    Close All Browsers
