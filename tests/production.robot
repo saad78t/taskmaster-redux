@@ -6,7 +6,6 @@ Suite Teardown  Close Browser
 ${URL}             https://saad78t.github.io/taskmaster-redux/
 
 *** Test Cases ***
-
 Test Chrome
     Open Browser    ${URL}   Chrome  options=add_argument("--headless"); 
     Maximize Browser Window
@@ -66,12 +65,10 @@ Test Firefox
     Click Button    //button[contains(., 'Update Task')]
     Wait Until Element Is Visible    //button[contains(., 'Update Task')]    timeout=6s
     Click Button    //button[contains(., '🔙 Back to list')]
-
     [Teardown]    Close All Browsers
 
-***Comments***
 Test Edge
-    Open Browser    ${URL}     browser=edge    options=add_argument("--no-user-data-dir")
+    Open Browser    ${URL}     Edge    options=add_argument("--no-user-data-dir")
     Maximize Browser Window
     Title Should Be  TaskMaster With Redux
     Wait Until Element Is Visible    //button[contains(., "Add Task")]    timeout=10s
