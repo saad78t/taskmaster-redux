@@ -12,6 +12,8 @@ Test Firefox
     Open Browser    ${URL}    Firefox     options=add_argument("--headless")
     Maximize Browser Window
     Title Should Be  TaskMaster With Redux
+    Execute JavaScript    document.body.style.zoom="0.75"
+    Sleep    1s
     Wait Until Element Is Visible    //button[contains(., "Add Task")]    timeout=10s
     Click Button    //button[contains(., "Add Task")]
     Wait Until Element Is Visible    //input[@type='text']    timeout=10s
@@ -29,8 +31,6 @@ Test Firefox
     Wait Until Page Contains    Task to Edit    timeout=5s
 
     # Update Task
-    Execute JavaScript    document.body.style.zoom="0.75"
-    Sleep    1s
     Execute JavaScript    document.evaluate("//div[2]/div[1]/div[1]/a/h3", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.click();
     Wait Until Page Contains    Edit Task
     Input Text      //div/div/div[1]/input     ${empty}     Edited
