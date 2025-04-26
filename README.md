@@ -56,7 +56,7 @@ This project uses a CI/CD pipeline via GitHub Actions consisting of two stages:
 2. **Automated Testing Stage:**  
    End-to-end tests are run using Robot Framework with SeleniumLibrary across **Chrome**, **Firefox**, and **Edge** browsers, ensuring high compatibility.
 
-🔗 [CI/CD Pipeline Run](https://github.com/saad78t/taskmaster-redux/actions/runs/14635181578)
+🔗 [CI/CD Pipeline Run](https://github.com/saad78t/taskmaster-redux/actions/runs/14683096721)
 
 ---
 
