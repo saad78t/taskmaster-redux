@@ -50,7 +50,7 @@ Test Firefox
     Input Text    //input[@placeholder='Enter task name...']    Task to Edit
     Input Text    //input[@placeholder='Enter task description...']    Task to Edit
     Click Button    //button[contains(., "Add Task")]
-    
+    Scroll Element Into View    xpath=//button[contains(text(), 'read more')]
     Wait Until Element Is Visible    //button[contains(., 'read more')]    timeout=10s
     Element Should Be Enabled    //button[contains(., 'read more')]
     Click Button    //button[contains(., 'read more')]
