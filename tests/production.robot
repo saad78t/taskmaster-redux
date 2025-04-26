@@ -29,9 +29,8 @@ Test Firefox
     Wait Until Page Contains    Task to Edit    timeout=5s
 
     # Update Task
-    Execute JavaScript    window.scrollTo(0, document.body.scrollHeight)
     Sleep    1s
-    Click Element                    //div[2]/div[1]/div[1]/a/h3
+    Execute JavaScript    document.evaluate("//div[2]/div[1]/div[1]/a/h3", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.click();
     Wait Until Page Contains    Edit Task
     Input Text      //div/div/div[1]/input     ${empty}     Edited
     Click Button    //button[contains(., 'Update Task')]
