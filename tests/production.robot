@@ -29,6 +29,7 @@ Test Firefox
     Wait Until Page Contains    Task to Edit    timeout=5s
 
     # Update Task
+    Execute JavaScript    document.body.style.zoom="0.75"
     Sleep    1s
     Execute JavaScript    document.evaluate("//div[2]/div[1]/div[1]/a/h3", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.click();
     Wait Until Page Contains    Edit Task
