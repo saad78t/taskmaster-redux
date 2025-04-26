@@ -12,7 +12,7 @@ Test Firefox
     Open Browser    ${URL}    Firefox    options=add_argument("--headless")
     Maximize Browser Window
     Title Should Be  TaskMaster With Redux
-    Execute JavaScript    document.body.style.zoom="0.75"
+    Execute JavaScript    document.body.style.zoom="0.60"
     Sleep    1s
     Wait Until Element Is Visible    //button[contains(., "Add Task")]    timeout=10s
     Click Button    //button[contains(., "Add Task")]
