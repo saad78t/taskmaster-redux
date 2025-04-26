@@ -24,6 +24,12 @@ Test Chrome
     Element Should Be Enabled    //button[contains(., 'read more')]
     Click Button    //button[contains(., 'read more')]
     Wait Until Page Contains    Task to Edit    timeout=5s
+
+    Click     //div[2]/div[1]/div[1]/a/h3
+    Wait Until Page Contains    Edit Task
+    Input Text      //div/div/div[1]/input     ${empty}     Edited
+    Click Button    //button[contains(., 'Update Task')]  timeout=6s
+    Click Button    //button[contains(., '🔙 Back to list')]  timeout=6s
     [Teardown]    Close All Browsers
 
 Test Firefox
@@ -46,6 +52,12 @@ Test Firefox
     Element Should Be Enabled    //button[contains(., 'read more')]
     Click Button    //button[contains(., 'read more')]
     Wait Until Page Contains    Task to Edit    timeout=5s
+
+    Click     //div[2]/div[1]/div[1]/a/h3
+    Wait Until Page Contains    Edit Task
+    Input Text      //div/div/div[1]/input     ${empty}     Edited
+    Click Button    //button[contains(., 'Update Task')]  timeout=6s
+    Click Button    //button[contains(., '🔙 Back to list')]  timeout=6s
     [Teardown]    Close All Browsers
 
 Test Edge
@@ -68,4 +80,10 @@ Test Edge
     Element Should Be Enabled    //button[contains(., 'read more')]
     Click Button    //button[contains(., 'read more')]
     Wait Until Page Contains    Task to Edit    timeout=5s
+
+    Click     //div[2]/div[1]/div[1]/a/h3
+    Wait Until Page Contains    Edit Task
+    Input Text      //div/div/div[1]/input     ${empty}     Edited
+    Click Button    //button[contains(., 'Update Task')]  timeout=6s
+    Click Button    //button[contains(., '🔙 Back to list')]  timeout=6s
     [Teardown]    Close All Browsers
