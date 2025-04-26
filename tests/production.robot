@@ -34,7 +34,7 @@ Test Chrome
     [Teardown]    Close All Browsers
 
 Test Firefox
-    Open Browser    https://saad78t.github.io/taskmaster-redux/    Chrome  options=add_argument("--headless"); 
+    Open Browser    https://saad78t.github.io/taskmaster-redux/    Firefox     options=add_argument("--headless")
     Maximize Browser Window
     Title Should Be  TaskMaster With Redux
     Wait Until Element Is Visible    //button[contains(., "Add Task")]    timeout=10s
@@ -64,7 +64,7 @@ Test Firefox
     [Teardown]    Close All Browsers
 
 Test Edge
-    Open Browser    https://saad78t.github.io/taskmaster-redux/   Chrome  options=add_argument("--headless"); 
+    Open Browser    https://saad78t.github.io/taskmaster-redux/     Edge
     Maximize Browser Window
     Title Should Be  TaskMaster With Redux
     Wait Until Element Is Visible    //button[contains(., "Add Task")]    timeout=10s
