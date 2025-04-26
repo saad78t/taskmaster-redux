@@ -4,7 +4,7 @@ Suite Teardown  Close Browser
 
 *** Variables ***
 ${URL}             https://saad78t.github.io/taskmaster-redux/
-***Comments***
+
 *** Test Cases ***
 Test Chrome
     Open Browser    ${URL}   Chrome  options=add_argument("--headless"); 
@@ -56,7 +56,7 @@ Test Firefox
     Wait Until Page Contains    Task to Edit    timeout=5s
 
     # Update Task
-    Scroll Element Into View     //div[2]/div[1]/div/div[1]/div[1]/label/span
+    Scroll Element Into View     /div[2]/div[1]/div/div[1]/div[1]/label/span
     Click Element    //div[2]/div[1]/div[1]/a/h3
     Wait Until Page Contains    Edit Task
     Input Text      //div/div/div[1]/input     ${empty}     Edited
@@ -64,7 +64,7 @@ Test Firefox
     Wait Until Element Is Visible         //button[contains(., 'Update Task')]    timeout=6s
     Click Button    //button[contains(., '🔙 Back to list')]
     [Teardown]    Close All Browsers
-
+***Comments***
 Test Edge
     Open Browser    ${URL}     browser=edge    options=add_argument("--no-user-data-dir")
     Maximize Browser Window
