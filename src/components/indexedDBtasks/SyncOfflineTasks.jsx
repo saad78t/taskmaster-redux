@@ -5,11 +5,14 @@ import { addNewTask } from "../redux/tasksSlice";
 import { supabase } from "../../services/supabase";
 import { toast } from "react-toastify";
 
+// ⚠️ Note: This component is not used in the app flow.
+// It is kept for educational purposes to demonstrate manual syncing of offline tasks.
+// The app uses automatic syncing when coming online via `window.addEventListener("online", ...)`.
+
 const SyncOfflineTasks = () => {
   const [offlineTasks, setOfflineTasks] = useState([]);
   const dispatch = useDispatch();
 
-  // تحميل المهمات من IndexedDB
   useEffect(() => {
     const fetchTasks = async () => {
       const tasks = await getAllTasksFromDB();
@@ -31,9 +34,9 @@ const SyncOfflineTasks = () => {
             numberSelection: task.number,
             prioritySelection: task.priority,
             classification: task.classification,
-            imageUrl: null, // أو task.image إذا موجود
+            imageUrl: null,
             completed: false,
-            userId: localStorage.getItem("userId"), // حسب كيف مخزن اليوزر عندك
+            userId: localStorage.getItem("userId"),
           },
         ])
         .select();
@@ -42,12 +45,12 @@ const SyncOfflineTasks = () => {
 
       dispatch(addNewTask(data[0]));
       await deleteTaskFromDB(task.id);
-      toast.success("تم رفع المهمة بنجاح 🎉");
+      toast.success("The task has been uploaded successfully.🎉");
 
       // حذف من الواجهة
       setOfflineTasks((prev) => prev.filter((t) => t.id !== task.id));
     } catch (err) {
-      toast.error("فشل التزامن: " + err.message);
+      toast.error("Synchronization failure: " + err.message);
     }
   };
 

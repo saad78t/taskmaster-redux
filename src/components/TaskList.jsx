@@ -69,7 +69,7 @@ function TaskList() {
   //Automatic sync when internet comes back on
   useEffect(() => {
     const handleOnline = async () => {
-      await syncOfflineTasks(dispatch, userId);
+      await syncOfflineTasks(dispatch);
       const updated = await getAllTasksFromDB();
       setLocalTasks(updated);
       toast.success("✅ Tasks synced with server.");
@@ -80,7 +80,7 @@ function TaskList() {
     return () => {
       window.removeEventListener("online", handleOnline);
     };
-  }, [dispatch, userId]);
+  }, [dispatch]);
 
   // const baseTasks = search ? searchResult : tasks;
 
@@ -192,9 +192,9 @@ function TaskList() {
             <>
               <Button
                 onClick={async () => {
-                  await syncOfflineTasks(dispatch, userId);
+                  await syncOfflineTasks(dispatch);
                   const updated = await getAllTasksFromDB();
-                  setLocalTasks(updated); // نحدث القائمة بعد المزامنة
+                  setLocalTasks(updated); // We update the list after synchronization.
                 }}
                 className="bg-green-600 text-white px-4 py-2 rounded-md mb-4"
               >

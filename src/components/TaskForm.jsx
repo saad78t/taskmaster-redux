@@ -62,7 +62,7 @@ function TaskForm() {
         classification: classification || "Uncategorized",
         image: imageFile || null,
       });
-      // بعد إضافة المهمة إلى IndexedDB، خلي هذا السطر:
+
       window.dispatchEvent(new Event("offline-task-added"));
 
       toast.success("Task saved offline. Will sync when you're online.");
@@ -72,7 +72,7 @@ function TaskForm() {
       if (fileInputRef.current) {
         fileInputRef.current.value = null;
       }
-      return; // 🛑 نوقف هنا وما نكمل إرسال لأي API
+      return;
     }
 
     let imageUrl = null;

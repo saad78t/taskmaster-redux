@@ -1,9 +1,7 @@
 import { getAllTasksFromDB, deleteTaskFromDB } from "../db/indexedDB";
 import supabase from "./supabase";
 import { addNewTask } from "../redux/tasksSlice";
-import { getOrCreateUserId } from "./userId"; // ✅ استوردنا دالة userId
-
-// services/syncOfflineTasks.js
+import { getOrCreateUserId } from "./userId";
 
 export const syncOfflineTasks = async (dispatch) => {
   const userId = getOrCreateUserId();
@@ -26,8 +24,8 @@ export const syncOfflineTasks = async (dispatch) => {
       try {
         imageUrl = await uploadBase64ImageToSupabase(imageBlob, userId);
       } catch (err) {
-        console.error(`❌ فشل رفع صورة المهمة ${name}:`, err.message);
-        continue; // نكمل على المهمة التالية
+        console.error(`❌ Failed to upload task image ${name}:`, err.message);
+        continue; // We continue on the next task
       }
     }
 
@@ -48,15 +46,15 @@ export const syncOfflineTasks = async (dispatch) => {
       .select();
 
     if (error) {
-      console.error(`❌ فشل رفع المهمة ${name}:`, error.message);
-      continue; // نكمل على اللي بعدها
+      console.error(`❌ Failed to upload task image ${name}:`, error.message);
+      continue; // We will continue with the next one
     }
 
     dispatch(addNewTask(data[0]));
-    await deleteTaskFromDB(id); // ✅ حذف المهمة فقط إذا تمت المزامنة
+    await deleteTaskFromDB(id); //Delete task only if synced
   }
 
-  console.log("✅ تمّت مزامنة المهام غير المرفوعة.", userId);
+  console.log("Unuploaded tasks are synced.", userId);
 };
 
 export async function uploadBase64ImageToSupabase(base64String, userId) {
