@@ -201,3 +201,13 @@ _A screenshot of the storage interface inside Supabase, showing how images are s
 ---
 
 Made with ❤️ by [Saad](https://github.com/saad78t) as part of a learning journey into advanced React and full-stack development.
+---
+
+## ⚠️ Deployment Notes
+
+After deploying the application to GitHub Pages, you might encounter a 404 error when refreshing or directly navigating to a subpath (e.g., `/userId`). This is a known limitation of GitHub Pages because it treats all paths as file locations, so `/userId` is seen as a missing file. However, the application uses React Router, which should handle these routes on the client side.
+
+### Explanation:
+- The `404.html` fallback is already in place and GitHub Pages is configured to use it.
+- This error appears only on direct reload or navigation—not during regular app usage.
+- You can safely ignore this error or consider using a custom redirect method via JavaScript in `404.html` (not recommended for this simple use case).

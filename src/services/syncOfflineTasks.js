@@ -6,7 +6,7 @@ import { getOrCreateUserId } from "./userId";
 export const syncOfflineTasks = async (dispatch) => {
   const userId = getOrCreateUserId();
   const offlineTasks = await getAllTasksFromDB();
-
+  //for...of supports await directly inside the loop
   for (const task of offlineTasks) {
     const {
       id,
